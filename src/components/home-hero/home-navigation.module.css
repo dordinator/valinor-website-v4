@@ -1,6 +1,6 @@
 .spacer { height: 72px; background: #12395f; }
 .transparentSpacer { background: transparent; }
-.header { position: fixed; inset: 0 0 auto; z-index: 100; color: #eef3f9; background: #071d35c7; border-bottom: 1px solid #adc0d01c; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); font-family: var(--font-home-body), Arial, sans-serif; }
+.header { position: fixed; inset: 0 0 auto; z-index: 100; color: #eef3f9; background: #071d35; border-bottom: 1px solid #adc0d01c; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); font-family: var(--font-home-body), Arial, sans-serif; }
 .header.overHero { background: #071b314d; border-bottom-color: #adc0d010; }
 .bar { width: min(1380px, calc(100% - 80px)); height: 72px; margin: auto; display: flex; align-items: center; gap: 28px; }
 .brand { display: flex; align-items: center; gap: 13px; white-space: nowrap; }

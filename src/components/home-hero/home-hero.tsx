@@ -117,9 +117,10 @@ export function PortalPreview({ standalone = false }: { standalone?: boolean } =
 
 export function HomeHero({ showPreview = true, sharedBackground = false, viewport = false, scrollPreview = false }: { showPreview?: boolean; sharedBackground?: boolean; viewport?: boolean; scrollPreview?: boolean } = {}) {
   return (
+    <>
+    <HomeHeader overHero />
     <div className={`${styles.heroStage} ${sharedBackground ? styles.sharedBackground : ""} ${viewport ? styles.viewportHero : ""} ${scrollPreview ? styles.previewLead : ""}`} data-fluid-hero data-scroll-section={viewport && !scrollPreview || undefined}>
     {!sharedBackground && <FluidBackground />}
-    <HomeHeader overHero />
     <section className={`${styles.hero} ${showPreview ? "" : styles.compactHero} ${headingFont.variable} ${bodyFont.variable}`} aria-labelledby="alternative-hero-heading">
       <a className={styles.skipLink} href="#hero-end">Skip to services</a>
       <div className={styles.intro}>
@@ -133,5 +134,6 @@ export function HomeHero({ showPreview = true, sharedBackground = false, viewpor
       <div id="hero-end" />
     </section>
     </div>
+    </>
   );
 }

@@ -1,6 +1,6 @@
 .heroStage { position: relative; isolation: isolate; background: #0b1e33; }
 .heroStage.sharedBackground { background: transparent; }
-.viewportHero { min-height: 100svh; display: flex; flex-direction: column; }
+.viewportHero { min-height: calc(100svh - 72px); display: flex; flex-direction: column; }
 .viewportHero .hero { flex: 1; display: flex; flex-direction: column; justify-content: center; min-height: calc(100svh - 72px); padding: 80px 0 84px; }
 .viewportHero .hero .intro { padding: 0 24px; }
 .viewportHero.previewLead .hero { padding: 0 0 80px; justify-content: flex-start; }
@@ -109,6 +109,7 @@
   .activity { grid-template-columns: 1fr; } .teamNote { display: none; }
 }
 @media (max-width: 600px) {
+  .viewportHero { min-height: calc(100svh - 64px); }
   .viewportHero.previewLead .hero .intro { padding-top: 18svh; }
   .viewportHero .hero { min-height: calc(100svh - 64px); padding: 50px 0 60px; }
   .viewportHero .hero .intro { padding: 0 20px; }
