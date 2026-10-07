@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { FluidBackground } from "@/components/home-hero/fluid-background";
+import { headingFont, bodyFont } from "@/components/home-hero/fonts";
+import { LiquidCallLink } from "@/components/home-hero/liquid-call-link";
 import styles from "./login.module.css";
 
 export const metadata: Metadata = {
@@ -15,7 +17,7 @@ const portalAccessUrl = "https://valinorsystems.co.uk/access";
 
 export default function ClientLoginPage() {
   return (
-    <main className={styles.page} data-fluid-page>
+    <main className={`${styles.page} ${headingFont.variable} ${bodyFont.variable}`} data-fluid-page>
       <FluidBackground fullPage />
       <Link href="/" className={styles.back}>
         <span aria-hidden="true">←</span> Back to website
@@ -32,9 +34,7 @@ export default function ClientLoginPage() {
           preload
         />
         <h1 id="login-title">Log in to Valinor</h1>
-        <a className={styles.continue} href={portalLoginUrl}>
-          Continue with email
-        </a>
+        <LiquidCallLink href={portalLoginUrl} label="Continue with email" />
         <p className={styles.help}>
           First time here? <a href={portalAccessUrl}>Get your link</a>
         </p>

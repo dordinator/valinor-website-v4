@@ -5,12 +5,12 @@ import { motion, useReducedMotion, useSpring, useTransform } from "motion/react"
 import { useEffect, useId, type PointerEvent } from "react";
 import styles from "./liquid-call-link.module.css";
 
-function Label() {
-  return <span className={styles.label}>Book a call<svg viewBox="0 0 24 24" fill="none"><path d="M4 12h16m-6-6 6 6-6 6" /></svg></span>;
+function Label({ label }: { label: string }) {
+  return <span className={styles.label}>{label}<svg viewBox="0 0 24 24" fill="none"><path d="M4 12h16m-6-6 6 6-6 6" /></svg></span>;
 }
 
 /** A local goo mask merges the fill. Both text layers share that exact mask. */
-export function LiquidCallLink({ href = "/contact#book" }: { href?: string }) {
+export function LiquidCallLink({ href = "/contact#book", label = "Book a call" }: { href?: string; label?: string }) {
   const id = useId().replace(/[^a-zA-Z0-9_-]/g, "");
   const reduced = useReducedMotion();
   const x = useSpring(140, { stiffness: 120, damping: 21, mass: .8 });
@@ -37,7 +37,7 @@ export function LiquidCallLink({ href = "/contact#book" }: { href?: string }) {
   function settle() { radius.set(0); x.set(140); y.set(58); }
   function focus() { if (!reduced) { x.set(140); y.set(58); radius.set(310); } }
 
-  return <Link href={href} className={styles.button} aria-label="Book a call"
+  return <Link href={href} className={styles.button} aria-label={label}
     onPointerEnter={follow} onPointerMove={follow} onPointerLeave={settle}
     onPointerCancel={settle} onFocus={focus} onBlur={settle}>
     <svg className={styles.surface} viewBox="0 0 280 58" preserveAspectRatio="none" aria-hidden="true" focusable="false">
@@ -58,11 +58,11 @@ export function LiquidCallLink({ href = "/contact#book" }: { href?: string }) {
         </linearGradient>
         <radialGradient id={shine}><stop stopColor="#e4eff8" stopOpacity=".2" /><stop offset="1" stopColor="#e4eff8" stopOpacity="0" /></radialGradient>
       </defs>
-      <foreignObject x="0" y="0" width="280" height="58"><Label /></foreignObject>
+      <foreignObject x="0" y="0" width="280" height="58"><Label label={label} /></foreignObject>
       <g mask={`url(#${mask})`} className={styles.filled}>
         <rect width="280" height="58" fill={`url(#${ink})`} />
         <motion.ellipse cx={x} cy={y} rx="110" ry="55" fill={`url(#${shine})`} />
-        <foreignObject x="0" y="0" width="280" height="58"><Label /></foreignObject>
+        <foreignObject x="0" y="0" width="280" height="58"><Label label={label} /></foreignObject>
       </g>
     </svg>
   </Link>;
