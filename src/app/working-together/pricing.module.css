@@ -1,0 +1,67 @@
+.contents { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 24px; font-size: 15px; line-height: 1.5; }
+.contents a, .textLink { border-bottom: 1px solid #8a9aad66; padding-bottom: 5px; }
+.contents a:hover, .textLink:hover { border-color: currentColor; }
+.textLink { display: inline-block; font-size: 14px; }
+.comparisonScene.comparisonScene[data-viewport-block], .termsScene.termsScene[data-viewport-block] { padding-block: 32px; }
+.comparisonScene > div > div:first-child, .termsScene > div > div:first-child { margin-bottom: 20px; }
+.comparisonScene :is(.optionSummary, .scope) h3, .termsScene :is(.termsGrid, .ownership) h3 { font-size: 18px; line-height: 1.3; margin-bottom: 10px; }
+.comparisonScene .optionGrid p, .termsScene :is(.termsGrid, .ownership) p { font-size: 15px; line-height: 1.5; margin-bottom: 16px; }
+.optionGrid { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.25fr); gap: 40px; align-items: start; }
+.planRow { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px; padding-block: 14px; border-bottom: 1px solid #8a9aad33; }
+.planRow:first-child { padding-top: 0; }
+.comparisonScene .planRow p { margin-bottom: 0; }
+.comparisonScene .planRow h3 { margin-bottom: 6px; }
+.price { font-size: 27px !important; font-weight: 500; line-height: 1.15 !important; letter-spacing: -.025em; text-align: right; white-space: nowrap; }
+.price span { display: block; margin-top: 7px; font-size: 12px; line-height: 1.4; font-weight: 400; letter-spacing: 0; }
+.subsection { margin-top: 20px; }
+.subsection, .scope, .anchor, .ownership { scroll-margin-top: 100px; }
+.comparisonScene .subsection p { margin-bottom: 8px; }
+.comparison { border: 1px solid #8a9aad33; border-radius: 4px; }
+.comparisonScene .comparison table { font-size: 13px; line-height: 1.45; }
+.comparisonScene .comparison th, .comparisonScene .comparison td { padding: 9px 10px; }
+.comparison th:first-child { width: 25%; }
+.comparison td { width: 37.5%; }
+.comparison tbody th { background: transparent; }
+.comparison tbody tr:last-child > * { border-bottom: none; }
+.mobileLabel { display: none; }
+.termsGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; }
+.termsGrid p:last-child { margin-bottom: 0; }
+.ownership { margin-top: 20px; }
+.termsScene .ownership h3 { margin-bottom: 6px; }
+.ownership p { margin-bottom: 16px; }
+.termsScene .disclosures summary { padding-block: 13px; font-size: 16px; }
+.termsScene .disclosures details > div { font-size: 15px; line-height: 1.55; padding-bottom: 16px; }
+.disclosures details > div > div { margin-block: 0; }
+@media (max-width: 1000px) {
+  .optionGrid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.15fr); gap: 28px; }
+  .planRow { grid-template-columns: 1fr; gap: 8px; }
+  .price { text-align: left; font-size: 25px !important; }
+  .price span { display: inline; margin-left: 8px; }
+}
+@media (max-width: 760px) {
+  .comparisonScene.comparisonScene[data-viewport-block], .termsScene.termsScene[data-viewport-block] { padding-block: 38px; }
+  .contents { gap: 12px 20px; font-size: 14px; }
+  .optionGrid, .termsGrid { grid-template-columns: 1fr; gap: 28px; }
+  .planRow { grid-template-columns: minmax(0, 1fr) auto; gap: 18px; }
+  .price { text-align: right; }
+  .price span { display: block; margin-left: 0; }
+  .comparisonScene .optionGrid p, .termsScene :is(.termsGrid, .ownership) p { font-size: 16px; }
+  .comparison { border: 0; border-radius: 0; }
+  .comparison table, .comparison tbody { display: block; }
+  .comparison thead { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); }
+  .comparison tbody tr { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-bottom: 1px solid #8a9aad44; padding: 16px 0; }
+  .comparisonScene .comparison tbody th:first-child { grid-column: 1 / -1; width: auto; padding: 0 0 12px; border: 0; font-size: 16px; }
+  .comparisonScene .comparison tbody td { width: auto; padding: 0 12px 0 0; border: 0; font-size: 14px; }
+  .comparisonScene .comparison tbody td:last-child { padding: 0 0 0 12px; border-left: 1px solid #8a9aad33; }
+  .mobileLabel { display: block; font-size: 12px; line-height: 1.45; font-weight: 500; opacity: .75; margin-bottom: 8px; }
+}
+@media (max-width: 390px) {
+  .planRow { grid-template-columns: 1fr; gap: 8px; }
+  .price { text-align: left; }
+  .comparison tbody tr { grid-template-columns: 1fr; gap: 14px; }
+  .comparisonScene .comparison tbody th:first-child { padding-bottom: 0; }
+  .comparisonScene .comparison tbody td:last-child { padding: 14px 0 0; border-left: 0; border-top: 1px solid #8a9aad33; }
+}
+@media (min-width: 761px) and (max-height: 650px) {
+  .comparisonScene.comparisonScene[data-viewport-block], .termsScene.termsScene[data-viewport-block] { min-height: auto; padding-block: 30px; }
+}

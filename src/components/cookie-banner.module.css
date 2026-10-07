@@ -1,0 +1,105 @@
+/* Fixed to the bottom on every page. It is deliberately a bar and not a
+   modal: nothing is blocked while it is up, and refusing is the same one
+   click as accepting — an "accept" that is easier to reach than "reject" is
+   the failure the ICO keeps writing to people about. */
+.bar {
+  position: fixed;
+  z-index: 60;
+  right: var(--page-gutter);
+  bottom: var(--page-gutter);
+  left: var(--page-gutter);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: 1.15rem 1.35rem;
+  background: var(--paper);
+  border: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+  border-radius: 2px;
+  box-shadow: 0 18px 44px -28px color-mix(in srgb, var(--ink) 55%, transparent);
+}
+
+.copy {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--muted-ink);
+}
+
+.copy a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+}
+
+.copy a:hover {
+  color: var(--cobalt);
+}
+
+.actions {
+  display: flex;
+  flex-shrink: 0;
+  gap: 0.6rem;
+}
+
+/* Both buttons carry the same weight, size and prominence. Only the fill
+   differs, and that is the accept/decline convention rather than a thumb on
+   the scale. */
+.button {
+  padding: 0.6rem 1.15rem;
+  font: inherit;
+  font-size: 0.8125rem;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.accept {
+  color: var(--paper);
+  background: var(--ink);
+  border: 1px solid var(--ink);
+}
+
+.accept:hover {
+  background: var(--cobalt);
+  border-color: var(--cobalt);
+}
+
+.reject {
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--ink) 30%, transparent);
+}
+
+.reject:hover {
+  border-color: var(--ink);
+  background: color-mix(in srgb, var(--ink) 5%, transparent);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--signal-orange);
+  outline-offset: 2px;
+}
+
+/* Below the tablet band the bar stacks and the buttons go full width, so
+   neither is a smaller target than the other on a phone. */
+@media (max-width: 720px) {
+  .bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .actions {
+    gap: 0.5rem;
+  }
+
+  .button {
+    flex: 1;
+  }
+}

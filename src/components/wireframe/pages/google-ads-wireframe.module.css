@@ -1,0 +1,8 @@
+.journey { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; font-size: 20px; line-height: 1.4; margin-bottom: 25px; }
+.journey span[aria-hidden] { color: #93a2b3; font-size: 16px; }
+.cost { display: flex; align-items: center; flex-wrap: wrap; gap: 22px; font-size: 32px; margin: 0 0 24px; }
+.cost small { display: block; font-size: 14px; color: #94a5b8; margin-top: 6px; }
+.cost > span[aria-hidden] { font-size: 18px; color: #8f9eaf; }
+.small { font-size: 14px !important; color: #718196; margin-top: 25px; }
+.small a { text-decoration: underline; text-underline-offset: 4px; }
+@media (max-width: 650px) { .journey { gap: 10px 15px; font-size: 17px; } .cost { gap: 13px; font-size: 26px; } .cost small { font-size: 12px; } }

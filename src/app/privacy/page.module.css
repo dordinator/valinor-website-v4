@@ -1,0 +1,123 @@
+.page {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: clamp(4rem, 9vw, 7rem) var(--page-gutter) clamp(5rem, 10vw, 8rem);
+}
+
+.brand {
+  margin: 0 0 0.9rem;
+  font-family: var(--font-brand), serif;
+  font-size: 0.8125rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cobalt);
+}
+
+.title {
+  margin: 0 0 0.75rem;
+  font-size: clamp(2rem, 5vw, 2.85rem);
+  line-height: 1.1;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.updated {
+  margin: 0 0 3rem;
+  font-size: 0.8125rem;
+  color: var(--muted-ink);
+}
+
+.page h2 {
+  margin: 3rem 0 0.9rem;
+  font-size: 1.1875rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.page p,
+.page li {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: color-mix(in srgb, var(--ink) 82%, var(--paper));
+}
+
+.page ul {
+  padding-left: 1.1rem;
+  margin: 0.9rem 0;
+}
+
+.page li {
+  margin-bottom: 0.5rem;
+}
+
+.page a {
+  color: var(--cobalt);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+}
+
+.table {
+  width: 100%;
+  margin: 1.25rem 0;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.table th,
+.table td {
+  padding: 0.7rem 0.8rem 0.7rem 0;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+}
+
+.table th {
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.table td {
+  color: var(--muted-ink);
+}
+
+.table code {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.8125rem;
+  color: var(--ink);
+}
+
+/* The table is the one thing here that cannot simply reflow, so it scrolls
+   on its own below the tablet band rather than pushing the page sideways. */
+@media (max-width: 620px) {
+  .tableWrap {
+    overflow-x: auto;
+  }
+
+  .table {
+    min-width: 30rem;
+  }
+}
+
+/* The consent controls read as prose, not as a toolbar — they sit inside a
+   sentence, so they are underlined text that happens to be a button. */
+.linkButton {
+  padding: 0;
+  font: inherit;
+  color: var(--cobalt);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+}
+
+.linkButton:hover {
+  color: var(--signal-orange);
+}
+
+.linkButton:focus-visible {
+  outline: 2px solid var(--signal-orange);
+  outline-offset: 2px;
+}

@@ -1,0 +1,55 @@
+.spacer { height: 72px; background: #12395f; }
+.transparentSpacer { background: transparent; }
+.header { position: fixed; inset: 0 0 auto; z-index: 100; color: #eef3f9; background: #071d35c7; border-bottom: 1px solid #adc0d01c; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); font-family: var(--font-home-body), Arial, sans-serif; }
+.header.overHero { background: #071b314d; border-bottom-color: #adc0d010; }
+.bar { width: min(1380px, calc(100% - 80px)); height: 72px; margin: auto; display: flex; align-items: center; gap: 28px; }
+.brand { display: flex; align-items: center; gap: 13px; white-space: nowrap; }
+.brand img { width: 42px; height: 38px; object-fit: contain; }
+.brand span { font-family: var(--font-home-heading), Arial, sans-serif; font-weight: 500; font-size: 17px; letter-spacing: .055em; }
+.brand strong { display: block; font-weight: inherit; }
+.brand .reviewLabel { display: block; font-family: var(--font-home-body), Arial, sans-serif; font-size: 10px; line-height: 1.4; letter-spacing: .01em; color: #879cb4; font-weight: 400; margin-top: 2px; }
+.desktopNav { position: relative; display: flex; align-items: center; gap: 4px; margin-left: auto; }
+.navLink { display: flex; align-items: center; justify-content: center; gap: 4px; min-height: 34px; padding: 8px 13px; border: 0; border-radius: 20px; background: transparent; color: #a9b9cc; font: 400 14px/1.2 var(--font-home-body), Arial, sans-serif; cursor: pointer; white-space: nowrap; transition: color 160ms ease, background 160ms ease; }
+.navLink:hover, .navLink[aria-expanded="true"] { color: #fff; background: #ffffff0b; }
+.navLink[aria-current="page"] { color: #f5f8fc; }
+.header .chevron { width: 13px; height: 13px; stroke: currentColor; stroke-width: 1.4; transition: transform 180ms ease; }
+.navLink[aria-expanded="true"] .chevron { transform: rotate(180deg); }
+.actions { display: flex; gap: 18px; align-items: center; }
+.portal { border-left: 1px solid #b1c5dd20; padding-left: 23px; font-size: 14px; color: #a9b9cc; white-space: nowrap; transition: color 160ms ease; }
+.portal:hover { color: #fff; }
+.portal > span:last-child { margin-left: 5px; }
+.portalMobile { display: none; }
+.call { display: inline-flex; justify-content: center; align-items: center; min-height: 34px; padding: 8px 17px; font-size: 14px; line-height: 1.2; font-weight: 500; color: #102238; background: #eff3f8; border: 1px solid #ffffff3b; border-radius: 20px; white-space: nowrap; transition: background 160ms ease; }
+.call:hover { background: #fff; }
+.dropdown { position: absolute; top: calc(100% + 15px); right: -170px; width: min(710px, calc(100vw - 80px)); padding: 8px; border: 1px solid #ffffff16; border-radius: 15px; background: #081c31f5; backdrop-filter: blur(24px); box-shadow: 0 20px 50px #030d233d; animation: menuEnter 180ms cubic-bezier(.22, 1, .36, 1) both; }
+.dropdown[hidden], .mobilePanel[hidden] { display: none; }
+.serviceGrid { padding: 12px; display: grid; grid-template-columns: repeat(2, 1fr); column-gap: 22px; row-gap: 6px; background: #ffffff03; border: 1px solid #ffffff0b; border-radius: 9px; }
+.serviceGrid a { padding: 16px; border-radius: 6px; transition: background 150ms ease; }
+.serviceGrid a:hover { background: #ffffff05; }
+.serviceGrid a span { font-size: 15px; font-weight: 500; color: #e8eff8; }
+.serviceGrid p { margin: 8px 0 0; font-size: 14px; line-height: 1.55; color: #93a6bb; max-width: 245px; }
+.dropdownFooter { display: flex; justify-content: space-between; align-items: center; gap: 15px; padding: 20px 27px 14px; font-size: 13px; color: #8fa3ba; }
+.dropdownFooter > span:last-child { color: #b8c7d8; }
+.dropdownFooter:hover > span:last-child { color: #fff; }
+.dropdownFooter > span:last-child > span { margin-left: 7px; }
+.header a:focus-visible, .header button:focus-visible { outline: 2px solid #c7d6e8; outline-offset: 4px; }
+.mobileTrigger, .mobilePanel { display: none; }
+@keyframes menuEnter { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 1100px) { .bar { width: calc(100% - 48px); gap: 14px; } .brand span { font-size: 15px; } .actions { gap: 12px; } .portal { padding-left: 15px; } .navLink { padding-inline: 10px; } }
+@media (max-width: 1000px) {
+  .desktopNav { display: none; }
+  .actions { margin-left: auto; gap: 16px; }
+  .portal { border: 0; padding-left: 0; }
+  .mobileTrigger { display: flex; flex-direction: column; justify-content: center; gap: 5px; width: 34px; height: 34px; padding: 7px; border: 0; background: transparent; color: #f5f8fb; cursor: pointer; }
+  .mobileTrigger span { width: 17px; height: 1px; background: currentColor; transition: transform 180ms ease; }
+  .mobileTrigger[aria-expanded="true"] span:first-child { transform: translateY(3px) rotate(45deg); }
+  .mobileTrigger[aria-expanded="true"] span:last-child { transform: translateY(-3px) rotate(-45deg); }
+  .header[data-mobile-open] { background: #071b30f5; }
+  .mobilePanel:not([hidden]) { display: grid; gap: 35px; height: calc(100dvh - 72px); overflow-y: auto; overscroll-behavior: contain; padding: 30px 32px 60px; border-top: 1px solid #adc0d015; align-content: start; animation: menuEnter 180ms ease-out both; }
+  .groupLabel { display: block; font-size: 13px; color: #899db4; margin-bottom: 16px; }
+  .mobilePanel a { display: block; width: fit-content; font-size: 23px; line-height: 1.4; color: #edf3fa; margin-bottom: 13px; }
+}
+@media (max-width: 600px) { .spacer { height: 64px; } .bar { height: 64px; width: calc(100% - 32px); gap: 10px; } .brand { gap: 8px; } .brand img { width: 34px; height: 31px; } .brand span { font-size: 12px; letter-spacing: .035em; } .actions { gap: 6px; } .portal { font-size: 12px; } .portalDesktop { display: none; } .portalMobile { display: inline; } .call { font-size: 12px; padding: 7px 12px; min-height: 32px; } .mobileTrigger { width: 28px; padding: 5px; } .mobilePanel:not([hidden]) { height: calc(100dvh - 64px); padding: 28px 24px 50px; } }
+@media (max-width: 375px) { .call { display: none; } }
+@media (max-width: 350px) { .brand img { width: 30px; height: 28px; } .brand span { font-size: 11px; } .call { padding-inline: 10px; } .actions { gap: 5px; } }
+@media (prefers-reduced-motion: reduce) { .dropdown, .mobilePanel:not([hidden]) { animation: none; } .navLink, .header .chevron, .mobileTrigger span { transition: none; } }

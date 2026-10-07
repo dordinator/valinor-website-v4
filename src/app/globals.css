@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #fafbf8;
+  --ink: #0d0e0c;
+  --muted-ink: #62645f;
+  --cobalt: #008c95;
+  --signal-orange: #ff4f12;
+  --page-gutter: clamp(1.25rem, 2.35vw, 2.5rem);
+}
+
+@media (max-width: 520px) {
+  :root {
+    --page-gutter: 1rem;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--paper);
+  scroll-behavior: smooth;
+}
+
+html:has([data-fluid-page]), body:has([data-fluid-page]) {
+  background: #0b1e33;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* Leave destination headings below the fixed public navigation. */
+:is(#services, #seo, #google-ads, #contact, #hero-end) { scroll-margin-top: 88px; }
