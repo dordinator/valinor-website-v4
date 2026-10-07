@@ -1,0 +1,94 @@
+.page {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 100svh;
+  padding: 96px 24px;
+  background: #f5f6f8;
+  color: #152b43;
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+}
+
+.back {
+  position: absolute;
+  top: max(28px, env(safe-area-inset-top));
+  left: max(32px, env(safe-area-inset-left));
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 0;
+  color: #657181;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(100%, 320px);
+  text-align: center;
+}
+
+.mark {
+  width: 56px;
+  height: auto;
+  margin-bottom: 28px;
+}
+
+.login h1 {
+  margin: 0 0 32px;
+  font-size: 23px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+}
+
+.continue {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 20px;
+  border: 1px solid #152b43;
+  border-radius: 8px;
+  background: #152b43;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.5;
+  transition: background-color 160ms ease, border-color 160ms ease;
+}
+
+.continue:hover {
+  background: #24425e;
+  border-color: #24425e;
+}
+
+.help {
+  margin: 28px 0 0;
+  color: #657181;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.help a {
+  color: #152b43;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.back:hover {
+  color: #152b43;
+}
+
+.page a:focus-visible {
+  outline: 2px solid #8c7445;
+  outline-offset: 5px;
+}
+
+@media (max-width: 520px) {
+  .page { padding: 88px 24px; }
+  .back { top: max(20px, env(safe-area-inset-top)); left: max(24px, env(safe-area-inset-left)); }
+}

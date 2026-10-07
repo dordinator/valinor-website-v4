@@ -1,6 +1,7 @@
 "use client";
 
 import Script from "next/script";
+import { usePathname } from "next/navigation";
 import { useEffect, useSyncExternalStore } from "react";
 import {
   getConsentServerSnapshot,
@@ -39,6 +40,7 @@ const neverChanges = () => () => {};
  * hydration pass agree and only the client goes on to mount the tag.
  */
 export function Analytics() {
+  const pathname = usePathname();
   const onCanonicalHost = useSyncExternalStore(
     neverChanges,
     () => window.location.hostname === CANONICAL_HOST,
@@ -56,7 +58,7 @@ export function Analytics() {
   // exist yet on a slow connection; the queue is a plain array, and pushing
   // to it before the library loads is how the snippet itself works.
   useEffect(() => {
-    if (!onCanonicalHost || consent !== "granted") return;
+    if (pathname === "/login" || !onCanonicalHost || consent !== "granted") return;
     const w = window as typeof window & {
       dataLayer?: unknown[];
       gtag?: (...args: unknown[]) => void;
@@ -75,9 +77,9 @@ export function Analytics() {
     // not exist yet. The queue is a plain array either way.
     w.dataLayer = w.dataLayer ?? [];
     w.dataLayer.push(["consent", "update", granted]);
-  }, [onCanonicalHost, consent]);
+  }, [pathname, onCanonicalHost, consent]);
 
-  if (!onCanonicalHost) return null;
+  if (pathname === "/login" || !onCanonicalHost) return null;
 
   // Mirrors Google's own snippet, external tag first: it is async and needs
   // a round trip, so the inline block below always reaches the queue first

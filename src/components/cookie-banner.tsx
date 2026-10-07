@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useSyncExternalStore } from "react";
 import {
   getConsentServerSnapshot,
@@ -21,6 +22,7 @@ import styles from "./cookie-banner.module.css";
  * weeks ago.
  */
 export function CookieBanner() {
+  const pathname = usePathname();
   const consent = useSyncExternalStore(
     subscribeToConsent,
     getConsentSnapshot,
@@ -33,7 +35,7 @@ export function CookieBanner() {
     () => false,
   );
 
-  if (!settled || consent !== null) return null;
+  if (pathname === "/login" || !settled || consent !== null) return null;
 
   return (
     <aside
