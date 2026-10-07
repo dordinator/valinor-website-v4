@@ -29,7 +29,7 @@ export function HomeNavigation({ fontClassName, overHero = false }: { fontClassN
 
   useEffect(() => {
     if (!overHero) return;
-    const update = () => setScrolled(window.scrollY > 12);
+    const update = () => setScrolled(previous => window.scrollY > (previous ? 48 : 96));
     update(); window.addEventListener("scroll", update, { passive: true });
     return () => window.removeEventListener("scroll", update);
   }, [overHero]);
@@ -81,7 +81,7 @@ export function HomeNavigation({ fontClassName, overHero = false }: { fontClassN
   return (
     <>
       <div className={`${styles.spacer} ${overHero ? styles.transparentSpacer : ""}`} aria-hidden="true" />
-      <header ref={root} className={`${styles.header} ${overHero && !scrolled ? styles.overHero : ""} ${fontClassName}`} data-mobile-open={mobileOpen || undefined} onKeyDown={onKeyDown}>
+      <header ref={root} className={`${styles.header} ${overHero && !scrolled ? styles.overHero : ""} ${fontClassName}`} data-mobile-open={mobileOpen || undefined} data-floating={!overHero || scrolled || mobileOpen || undefined} onKeyDown={onKeyDown}>
         <div className={styles.bar}>
           <Link href="/" className={styles.brand} aria-label="Valinor Systems home" onClick={close}>
             <Image src="/assets/brand/valinor-mark-transparent.png" alt="" width={107} height={94} sizes="42px" preload />
@@ -109,6 +109,7 @@ export function HomeNavigation({ fontClassName, overHero = false }: { fontClassN
           <div className={styles.actions}>
             <Link className={styles.portal} href="/login" aria-label="Client portal" onClick={close}><span className={styles.portalDesktop}>Client portal</span><span className={styles.portalMobile}>Client portal</span><span aria-hidden="true">↗</span></Link>
             <button ref={mobileTrigger} className={styles.mobileTrigger} type="button" aria-label={mobileOpen ? "Close navigation" : "Open navigation"} aria-expanded={mobileOpen} aria-controls={`${id}-mobile`} onClick={() => { clearTimer(); setServicesOpen(false); setMobileOpen(open => !open); }}><span /><span /></button>
+            <Link className={styles.call} href="/contact#book" onClick={close}><span>Book a call</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg></Link>
           </div>
         </div>
         <nav className={styles.mobilePanel} id={`${id}-mobile`} aria-label="Mobile navigation" hidden={!mobileOpen} data-lenis-prevent>
