@@ -3,6 +3,9 @@
 .header { --nav-inset: 8px; position: fixed; top: 12px; left: 50%; transform: translateX(-50%); width: min(1280px, calc(100% - 48px)); z-index: 100; isolation: isolate; color: #eef3f9; border: 1px solid transparent; border-radius: 999px; font-family: var(--font-home-body), Arial, sans-serif; }
 .header::before { content: ""; position: absolute; inset: -1px; z-index: -1; pointer-events: none; border: 1px solid #d6e4f02b; border-radius: inherit; background: linear-gradient(110deg, #34495e, #263b50); box-shadow: 0 8px 28px #020a1826, inset 0 1px 0 #ffffff0a; opacity: 1; transition: opacity 220ms ease-out; }
 .header.overHero::before { opacity: 0; }
+/* Hide on the way down, return on the way up. `translate` is separate from the centring transform, so the two do not fight. */
+.header { transition: translate 340ms cubic-bezier(.22, 1, .36, 1); }
+.header[data-hidden] { translate: 0 calc(-100% - 28px); transition-duration: 260ms; transition-timing-function: cubic-bezier(.4, 0, 1, 1); }
 .bar { width: 100%; height: 64px; padding: 0 20px; margin: auto; display: flex; align-items: center; gap: 24px; }
 .brand, .desktopNav, .actions { transition: transform 220ms cubic-bezier(.22, 1, .36, 1); }
 .header[data-floating] .brand { transform: translateX(var(--nav-inset)); }
@@ -25,27 +28,66 @@
 .portal:hover { color: #fff; }
 .portal > span:last-child { margin-left: 5px; }
 .portalMobile { display: none; }
-.call { display: inline-flex; justify-content: center; align-items: center; gap: 12px; min-height: 44px; padding: 11px 18px; font-size: 14px; line-height: 1.2; font-weight: 500; color: #fff; background: linear-gradient(180deg, #367bf0, #2858dc); border: 1px solid #9cbbff66; border-radius: 999px; box-shadow: inset 0 1px 1px #ffffff52, inset 0 -1px 1px #143ca766, 0 5px 17px #17377633; white-space: nowrap; transition: background 160ms ease, box-shadow 160ms ease; }
-.call svg { width: 16px; height: 16px; flex-shrink: 0; }
-.call:hover { background: linear-gradient(180deg, #4489fb, #2b61e5); box-shadow: inset 0 1px 1px #ffffff66, 0 6px 20px #17377644; }
-.dropdown { position: absolute; top: calc(100% + 15px); right: -170px; width: min(710px, calc(100vw - 80px)); padding: 8px; border: 1px solid #ffffff16; border-radius: 15px; background: #081c31; backdrop-filter: blur(24px); box-shadow: 0 20px 50px #030d233d; animation: menuEnter 180ms cubic-bezier(.22, 1, .36, 1) both; }
+/* Liquid glass: a clear capsule that blurs and brightens what is behind it. The rim is lit top-left and bottom-right,
+   the body carries a top specular line and a soft inner glow, and a highlight follows the pointer (--mx). */
+.call { --mx: 30%; position: relative; isolation: isolate; display: inline-flex; justify-content: center; align-items: center; gap: 12px; min-height: 44px; padding: 11px 19px; font-size: 14px; line-height: 1.2; font-weight: 500; letter-spacing: -.005em; color: #fff; text-shadow: 0 1px 2px #020a1859; border-radius: 999px; white-space: nowrap; overflow: hidden;
+  background: linear-gradient(180deg, #ffffff2e 0%, #ffffff0f 42%, #9fc4ff1f 100%);
+  -webkit-backdrop-filter: blur(14px) saturate(170%) brightness(1.12); backdrop-filter: blur(14px) saturate(170%) brightness(1.12);
+  box-shadow: inset 0 1px 1px #ffffff8c, inset 0 -1px 1px #ffffff2e, inset 0 7px 10px -8px #ffffff73, inset 0 -10px 14px -10px #a9cbff80, 0 6px 22px #020a1852, 0 1px 2px #020a1840;
+  transition: box-shadow 260ms ease-out, transform 220ms cubic-bezier(.22, 1, .36, 1), background-color 260ms ease-out; }
+.call::before { content: ""; position: absolute; inset: 0; z-index: -1; padding: 1px; border-radius: inherit; pointer-events: none; background: linear-gradient(135deg, #ffffffd9 0%, #ffffff40 28%, #ffffff14 55%, #cfe1ff8c 100%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); }
+.call::after { content: ""; position: absolute; top: -60%; left: var(--mx); z-index: -1; width: 120px; height: 220%; translate: -50% 0; pointer-events: none; background: radial-gradient(closest-side, #ffffff59, #ffffff00); opacity: .45; transition: opacity 260ms ease-out, left 420ms cubic-bezier(.22, 1, .36, 1); }
+.call svg { width: 16px; height: 16px; flex-shrink: 0; filter: drop-shadow(0 1px 1px #020a1859); transition: transform 260ms cubic-bezier(.22, 1, .36, 1); }
+@media (hover: hover) and (pointer: fine) {
+  .call:hover { background-color: #ffffff14; box-shadow: inset 0 1px 1px #ffffffb3, inset 0 -1px 1px #ffffff40, inset 0 9px 12px -8px #ffffff8c, inset 0 -12px 16px -10px #a9cbffa6, 0 8px 28px #020a1866, 0 1px 2px #020a1840; }
+  .call:hover::after { opacity: 1; transition: opacity 260ms ease-out, left 90ms linear; }
+  .call:hover svg { transform: translateX(3px); }
+}
+.call:active { transform: scale(.965, .95); }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .call { background: linear-gradient(180deg, #5a7896, #3d5a78); } }
+/* Services menu. One sheet of liquid glass docked under the bar (a web approximation: backdrop blur, a lit rim and inner
+   highlights). Services on the left, each with a small glass tile; the way to pricing on the right, under an arc of light.
+   The page behind is dimmed and softened while it is open, so the menu is the only thing in focus. */
+.scrim { position: fixed; inset: 0; z-index: 99; pointer-events: none; opacity: 0; background: #040c1859; -webkit-backdrop-filter: blur(7px); backdrop-filter: blur(7px); transition: opacity 320ms ease-out; }
+.scrim[data-open] { opacity: 1; }
+.dropdown { position: absolute; top: calc(100% + 10px); left: 0; right: 0; isolation: isolate; overflow: hidden; border-radius: 28px; transform-origin: 50% 0;
+  background: linear-gradient(180deg, #ffffff1a 0%, #ffffff08 22%, #0b1e3300 100%), #0f2740d9;
+  -webkit-backdrop-filter: blur(30px) saturate(175%) brightness(1.04); backdrop-filter: blur(30px) saturate(175%) brightness(1.04);
+  box-shadow: inset 0 1px 1px #ffffff7a, inset 0 -1px 1px #ffffff1a, inset 0 14px 20px -16px #ffffff47, 0 30px 80px #020a188c, 0 2px 8px #020a1840;
+  animation: menuEnter 340ms cubic-bezier(.22, 1, .36, 1) both; }
+.dropdown::before { content: ""; position: absolute; inset: 0; z-index: 2; padding: 1px; border-radius: inherit; pointer-events: none; background: linear-gradient(135deg, #ffffffb8 0%, #ffffff33 22%, #ffffff0f 55%, #cfe1ff70 100%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); }
 .dropdown[hidden], .mobilePanel[hidden] { display: none; }
-.serviceGrid { padding: 12px; display: grid; grid-template-columns: repeat(2, 1fr); column-gap: 22px; row-gap: 6px; background: #ffffff03; border: 1px solid #ffffff0b; border-radius: 9px; }
-.serviceGrid a { padding: 16px; border-radius: 6px; transition: background 150ms ease; }
-.serviceGrid a:hover { background: #ffffff05; }
-.serviceGrid a span { font-size: 15px; font-weight: 500; color: #e8eff8; }
-.serviceGrid p { margin: 8px 0 0; font-size: 14px; line-height: 1.55; color: #93a6bb; max-width: 245px; }
-.dropdownFooter { display: flex; justify-content: space-between; align-items: center; gap: 15px; padding: 20px 27px 14px; font-size: 13px; color: #8fa3ba; }
-.dropdownFooter > span:last-child { color: #b8c7d8; }
-.dropdownFooter:hover > span:last-child { color: #fff; }
-.dropdownFooter > span:last-child > span { margin-left: 7px; }
+/* Four large, equal targets in the bar's own order. Each is a whole card you can click, with its arrow always showing. */
+.serviceGrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; padding: 14px 14px 12px; }
+.serviceGrid a { display: grid; grid-template-columns: 1fr auto; grid-template-rows: auto 1fr; row-gap: 26px; min-height: 196px; padding: 18px 18px 20px; border-radius: 20px; background-color: #ffffff0f; box-shadow: inset 0 0 0 1px #ffffff1f, inset 0 1px 0 #ffffff33; transition: background-color 200ms ease, box-shadow 200ms ease, transform 320ms cubic-bezier(.22, 1, .36, 1); animation: rowEnter 420ms cubic-bezier(.22, 1, .36, 1) calc(60ms + var(--i) * 45ms) both; }
+.tile { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 14px; color: var(--tint, #dbe6f3); background: linear-gradient(160deg, #ffffff2e, #ffffff0d); box-shadow: inset 0 1px 0 #ffffff66, inset 0 -1px 0 #ffffff14, 0 4px 12px #020a1840; transition: color 200ms ease, background-color 200ms ease, box-shadow 240ms ease; }
+.tile svg { width: 23px; height: 23px; }
+.rowArrow { align-self: start; box-sizing: border-box; width: 34px; height: 34px; padding: 8px; border-radius: 50%; color: #dbe6f3; box-shadow: inset 0 0 0 1px #ffffff33; transition: color 200ms ease, background-color 200ms ease, box-shadow 200ms ease, transform 300ms cubic-bezier(.22, 1, .36, 1); }
+.rowText { grid-column: 1 / -1; align-self: end; display: grid; gap: 7px; }
+.rowTitle { color: #fff; font: 500 20px/1.2 var(--font-home-heading), Arial, sans-serif; letter-spacing: -.01em; }
+.rowDescription { color: #c9d6e6; font-size: 14px; line-height: 1.5; text-wrap: pretty; }
+.serviceGrid a:hover, .serviceGrid a:focus-visible, .serviceGrid a[aria-current="page"] { background-color: #ffffff21; box-shadow: inset 0 0 0 1px #ffffff5c, inset 0 1px 0 #ffffff73, 0 10px 26px #020a1859; }
+.serviceGrid a:hover, .serviceGrid a:focus-visible { transform: translateY(-2px); }
+.serviceGrid a:hover .tile, .serviceGrid a:focus-visible .tile, .serviceGrid a[aria-current="page"] .tile { background-color: color-mix(in srgb, var(--tint, #a9cbff) 24%, transparent); box-shadow: inset 0 1px 0 #ffffff99, inset 0 -1px 0 #ffffff24, 0 6px 18px color-mix(in srgb, var(--tint, #6fa4f0) 30%, transparent); }
+.serviceGrid a:hover .rowArrow, .serviceGrid a:focus-visible .rowArrow { color: #10283f; background-color: #f4f8fc; box-shadow: none; transform: translateX(3px); }
+/* One plain line to pricing along the bottom. */
+.feature { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; padding: 16px 32px 19px; border-top: 1px solid #ffffff1c; animation: rowEnter 460ms cubic-bezier(.22, 1, .36, 1) calc(60ms + var(--i) * 45ms) both; }
+.featureTitle { color: #f4f8fc; font-size: 15px; font-weight: 500; }
+.featureLine { color: #c9d6e6; font-size: 14px; }
+.featureLink { display: inline-flex; align-items: center; align-self: center; gap: 8px; margin-left: auto; color: #fff; font-size: 15px; font-weight: 500; text-decoration: underline; text-decoration-color: #ffffff59; text-underline-offset: .3em; transition: text-decoration-color 200ms ease; }
+.featureLink svg { width: 17px; height: 17px; transition: transform 300ms cubic-bezier(.22, 1, .36, 1); }
+.feature:hover .featureLink, .feature:focus-visible .featureLink { text-decoration-color: #fff; }
+.feature:hover .featureLink svg, .feature:focus-visible .featureLink svg { transform: translateX(4px); }
+@keyframes rowEnter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .dropdown { background: #12293f; } .scrim { background: #040c1899; } }
+@media (prefers-reduced-transparency: reduce) { .dropdown { background: #12293f; -webkit-backdrop-filter: none; backdrop-filter: none; } .scrim { -webkit-backdrop-filter: none; backdrop-filter: none; } }
 .header a:focus-visible, .header button:focus-visible { outline: 2px solid #c7d6e8; outline-offset: 4px; }
 .mobileTrigger, .mobilePanel { display: none; }
-@keyframes menuEnter { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes menuEnter { from { opacity: 0; transform: translateY(-10px) scale(.975); } to { opacity: 1; transform: none; } }
 @media (max-width: 1100px) { .bar { gap: 14px; } .brand span { font-size: 15px; } .actions { gap: 12px; } .portal { padding-left: 15px; } .navLink { padding-inline: 10px; } }
 @media (max-width: 1000px) {
   .header { top: 8px; width: calc(100% - 24px); }
-  .desktopNav { display: none; }
+  .desktopNav, .dropdown, .scrim { display: none; }
   .actions { margin-left: auto; gap: 16px; }
   .portal { border: 0; padding-left: 0; }
   .mobileTrigger { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; width: 44px; height: 44px; padding: 7px; border: 0; background: transparent; color: #f5f8fb; cursor: pointer; }
@@ -61,7 +103,7 @@
   .groupLabel { display: block; font-size: 13px; color: #899db4; margin-bottom: 16px; }
   .mobilePanel a { display: flex; align-items: center; width: fit-content; min-height: 44px; font-size: 23px; line-height: 1.4; color: #edf3fa; margin-bottom: 8px; }
 }
-@media (max-width: 600px) { .spacer { height: 80px; } .transparentSpacer { height: 64px; } .header { --nav-inset: 4px; top: 8px; width: calc(100% - 24px); } .bar { height: 60px; gap: 10px; padding: 0 12px; } .header[data-mobile-open] .bar { height: 60px; padding: 0 12px; } .brand { gap: 8px; } .brand img { width: 34px; height: 31px; } .brand > span { display: none; } .actions { gap: 6px; } .portal { font-size: 12px; } .portalDesktop { display: none; } .portalMobile { display: inline; } .call { font-size: 12px; gap: 8px; padding: 10px 12px; min-height: 44px; } .call svg { width: 14px; height: 14px; } .mobileTrigger { width: 44px; padding: 5px; } .mobilePanel:not([hidden]) { max-height: calc(100dvh - 88px); padding: 24px 24px 32px; } }
+@media (max-width: 600px) { .spacer { height: 80px; } .transparentSpacer { height: 64px; } .header { --nav-inset: 4px; top: 8px; width: calc(100% - 24px); } .bar { height: 60px; gap: 10px; padding: 0 12px; } .header[data-mobile-open] .bar { height: 60px; padding: 0 12px; } .brand { gap: 8px; } .brand img { width: 34px; height: 31px; } .brand > span { display: none; } .actions { gap: 6px; } .portal { font-size: 12px; } .portalDesktop { display: none; } .portalMobile { display: inline; } .call { font-size: 12px; gap: 8px; padding: 10px 13px; min-height: 44px; } .call svg { width: 14px; height: 14px; } .mobileTrigger { width: 44px; padding: 5px; } .mobilePanel:not([hidden]) { max-height: calc(100dvh - 88px); padding: 24px 24px 32px; } }
 @media (max-width: 380px) { .bar, .header[data-mobile-open] .bar { padding-inline: 10px; } .portal { font-size: 11px; } }
-@media (max-width: 350px) { .bar, .header[data-mobile-open] .bar { padding-inline: 8px; gap: 4px; } .brand img { width: 30px; height: 28px; } .brand span { font-size: 11px; } .call { padding-inline: 8px; } .actions { gap: 4px; } }
-@media (prefers-reduced-motion: reduce) { .dropdown, .mobilePanel:not([hidden]) { animation: none; } .header::before, .brand, .desktopNav, .actions, .navLink, .header .chevron, .mobileTrigger span, .call { transition: none; } }
+@media (max-width: 350px) { .bar, .header[data-mobile-open] .bar { padding-inline: 8px; gap: 4px; } .brand img { width: 30px; height: 28px; } .brand span { font-size: 11px; } .call { padding-inline: 9px; gap: 6px; } .actions { gap: 4px; } }
+@media (prefers-reduced-motion: reduce) { .header { transition: none; } .dropdown, .mobilePanel:not([hidden]), .serviceGrid a, .feature { animation: none; } .scrim, .tile, .rowArrow, .serviceGrid a, .featureLink, .featureLink svg { transition: none; } .serviceGrid a:hover, .serviceGrid a:focus-visible { transform: none; } .header::before, .brand, .desktopNav, .actions, .navLink, .header .chevron, .mobileTrigger span, .call, .call::after, .call svg { transition: none; } .call:active { transform: none; } }

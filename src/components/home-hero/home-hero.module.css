@@ -59,7 +59,7 @@
 .exampleBusiness svg { width: 15px; height: 15px; }
 .workspace { padding: 23px 30px 28px; background: radial-gradient(ellipse at top, #10345955, transparent 80%); min-width: 0; }
 .workspaceHeading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 23px; }
-.workspaceHeading h2 { font-size: 29px; font-weight: 400; letter-spacing: -.02em; margin: 0; }
+.workspaceHeading .workspaceTitle { font-size: 29px; font-weight: 400; letter-spacing: -.02em; margin: 0; }
 .newRequest { display: flex; align-items: center; gap: 10px; background: #e7c98b; color: #122941; border: 1px solid #f3d899; border-radius: 6px; padding: 10px 16px; font-size: 14px; font-weight: 500; }
 .newRequest svg { width: 18px; height: 18px; }
 .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
@@ -72,7 +72,7 @@
 .nextDelivery, .teamNote { border: 1px solid #315a7d88; border-radius: 6px; padding: 20px 22px; display: flex; align-items: flex-start; gap: 19px; min-width: 0; }
 .activity > div > svg { width: 28px; height: 28px; color: #c6d4e5; margin-top: 3px; }
 .activity > div > div { flex: 1; min-width: 0; }
-.activity h3 { font-weight: 500; font-size: 17px; margin: 6px 0 14px; }
+.activity .cardTitle { font-weight: 500; font-size: 17px; margin: 6px 0 14px; }
 .teamNote p { margin: 0; font-size: 14px; color: #c5d3e4; line-height: 1.5; }
 .deliveryBottom { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .status { display: inline-flex; align-items: center; gap: 6px; background: #dfbd7226; color: #e8cc8c; border-radius: 20px; padding: 4px 9px; font-size: 12px; white-space: nowrap; }
@@ -97,8 +97,6 @@
 .translucentPreview .sidebar .active { background: #83afd52b; }
 .translucentPreview .stats > div, .translucentPreview .nextDelivery, .translucentPreview .teamNote, .translucentPreview .requests { background: #8daed00a; border-color: #c6d8eb22; }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .translucentPreview .portalWindow { background: #08182cba; } }
-.skipLink { position: absolute; top: 10px; left: 10px; transform: translateY(-200%); background: #fff; color: #10233a; padding: 12px; border-radius: 4px; z-index: 5; }
-.skipLink:focus { transform: none; }
 @media (max-width: 1250px) {
   .preview { width: calc(100% - 64px); }
   .portalLayout { grid-template-columns: 215px 1fr; }
@@ -111,7 +109,7 @@
   .intro p { max-width: 700px; font-size: 20px; }
   .portalLayout { grid-template-columns: 175px 1fr; }
   .portalBrand { font-size: 12px; padding: 0 8px; } .sidebar li { font-size: 12px; gap: 9px; padding: 0 8px; }
-  .workspaceHeading h2 { font-size: 24px; }
+  .workspaceHeading .workspaceTitle { font-size: 24px; }
   .stats > div { gap: 9px; padding: 13px 10px; } .stats svg { width: 24px; height: 24px; } .stats strong { font-size: 18px; }
   .activity { grid-template-columns: 1fr; } .teamNote { display: none; }
 }
@@ -133,11 +131,11 @@
   .trafficLights { gap: 5px; } .trafficLights i { width: 8px; height: 8px; }
   .portalLayout { display: block; } .sidebar { display: none; }
   .workspace { padding: 19px 14px 17px; }
-  .workspaceHeading { margin-bottom: 17px; } .workspaceHeading h2 { font-size: 23px; }
+  .workspaceHeading { margin-bottom: 17px; } .workspaceHeading .workspaceTitle { font-size: 23px; }
   .newRequest { font-size: 11px; padding: 7px 9px; gap: 5px; } .newRequest svg { width: 13px; height: 13px; }
   .stats { grid-template-columns: repeat(2, 1fr); gap: 10px; } .stats > div:last-child { grid-column: 1 / -1; min-height: 66px; }
   .stats > div { min-height: 75px; padding: 12px; gap: 12px; } .stats p span { font-size: 12px; } .stats strong { font-size: 21px; }
-  .activity { margin-top: 12px; } .nextDelivery { padding: 16px 12px; } .activity h3 { font-size: 16px; }
+  .activity { margin-top: 12px; } .nextDelivery { padding: 16px 12px; } .activity .cardTitle { font-size: 16px; }
   .deliveryBottom { flex-wrap: wrap; gap: 9px; }
   .requests { padding: 15px 12px; margin-top: 12px; } .requestsHeading { font-size: 12px; }
   .requests th:last-child, .requests td:last-child { display: none; } .requests td:first-child { width: 58%; padding-right: 8px; }
@@ -146,3 +144,5 @@
 @media (prefers-reduced-motion: reduce) {
   .word, .intro p, .ctaReveal, .hero > .preview { animation: none; }
 }
+/* The demo titles are paragraphs, not headings; these keep them clear of the paragraph rules around them. */
+.workspaceHeading .workspaceTitle, .activity .cardTitle { color: inherit; line-height: 1.5; }

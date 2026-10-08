@@ -2,13 +2,14 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { HomeHeader } from "@/components/home-hero/home-hero";
 import { bodyFont, headingFont } from "@/components/home-hero/fonts";
+import { SiteFooter } from "@/components/site-footer";
 import styles from "./wireframe.module.css";
 import { BOOKING_URL } from "@/lib/booking";
 
 export const reviewPages = [
   ["Home", "/"], ["SEO", "/seo"], ["Web Design", "/web-design"],
   ["Google Ads", "/google-ads"], ["Ad Grants", "/google-ad-grants"],
-  ["Options & pricing", "/working-together"], ["Contact", "/contact"],
+  ["Pricing", "/pricing"], ["Contact", "/contact"],
 ] as const;
 
 export function WireframeSurface({ children, transparent = false, className = "" }: { children: ReactNode; transparent?: boolean; className?: string }) {
@@ -33,5 +34,5 @@ export function Note({ children }: { children: ReactNode }) { return <div classN
 export function ActionLink({ href = BOOKING_URL, children }: { href?: string; children: ReactNode }) { return <Link className={styles.action} href={href}>{children}</Link>; }
 export function FAQ({ items }: { items: { question: string; answer: ReactNode }[] }) { return <div className={styles.faq}>{items.map(({ question, answer }) => <details key={question}><summary>{question}<span aria-hidden="true">+</span></summary><div>{answer}</div></details>)}</div>; }
 export function WireframeFooter() {
-  return <footer className={`${styles.footer} ${bodyFont.variable}`}><div><span>Valinor Systems · Wireframe preview</span><nav aria-label="Footer navigation"><Link href="/working-together">Options &amp; pricing</Link><Link href="/contact">Contact</Link><Link href="/login">Client portal</Link><Link href="/privacy">Privacy &amp; cookies</Link></nav></div></footer>;
+  return <SiteFooter />;
 }

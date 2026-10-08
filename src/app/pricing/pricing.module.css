@@ -21,8 +21,6 @@
 .heroAction { animation: reveal 650ms cubic-bezier(.22, 1, .36, 1) 300ms both; }
 .heroAction:focus-within { animation: none; }
 .heroAction p { margin: 22px auto 0; max-width: 700px; color: var(--muted); font-size: 15px; line-height: 1.6; text-wrap: pretty; }
-.skipLink { position: absolute; top: 0; left: 24px; transform: translateY(-240px); background: #fff; color: #10283f; padding: 12px 20px; border-radius: 4px; }
-.skipLink:focus { transform: none; }
 .comparisonSection, .websiteSection { width: min(1280px, calc(100% - 96px)); margin: 0 auto; scroll-margin-top: 108px; }
 .comparisonSection { padding: 72px 0 90px; }
 .sectionHeading { margin-bottom: 36px; }
@@ -129,3 +127,5 @@
   .hero h1, .valueCopy, .heroAction { animation: none; }
   .plus::after { transition: none; }
 }
+.detailCopy a, .closing .standalone a { text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); text-underline-offset: .22em; transition: text-decoration-color 160ms ease; }
+.detailCopy a:hover, .closing .standalone a:hover { text-decoration-color: currentColor; }

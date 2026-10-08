@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useSyncExternalStore } from "react";
+import { AnimatePresence, motion } from "motion/react";
+import { useId, useState, useSyncExternalStore } from "react";
+import { bodyFont } from "@/components/home-hero/fonts";
 import {
   getConsentServerSnapshot,
   getConsentSnapshot,
@@ -17,12 +19,15 @@ import styles from "./cookie-banner.module.css";
  * <Analytics> watches.
  *
  * Nothing here renders on the server — the choice is client-side state, and
- * a server snapshot of null would otherwise put the bar into the prerendered
+ * a server snapshot of null would otherwise put the card into the prerendered
  * HTML of every page, where it would flash for people who settled this
  * weeks ago.
  */
 export function CookieBanner() {
   const pathname = usePathname();
+  const id = useId();
+  const [choosing, setChoosing] = useState(false);
+  const [analytics, setAnalytics] = useState(false);
   const consent = useSyncExternalStore(
     subscribeToConsent,
     getConsentSnapshot,
@@ -35,36 +40,82 @@ export function CookieBanner() {
     () => false,
   );
 
-  if (pathname === "/login" || !settled || consent !== null) return null;
+  const open = pathname !== "/login" && settled && consent === null;
 
   return (
-    <aside
-      className={styles.bar}
-      role="region"
-      aria-label="Cookie choices"
-    >
-      <p className={styles.copy}>
-        We use analytics cookies to see which pages people read and how they
-        arrived. They are off until you say otherwise, and the site works the
-        same either way. Our <Link href="/privacy">privacy and cookie policy</Link>{" "}
-        has the detail.
-      </p>
-      <div className={styles.actions}>
-        <button
-          type="button"
-          className={`${styles.button} ${styles.reject}`}
-          onClick={() => setConsent("denied")}
+    <AnimatePresence>
+      {open && (
+        <motion.aside
+          className={`${styles.card} ${bodyFont.variable}`}
+          role="region"
+          aria-labelledby={`${id}-title`}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0, transition: { duration: 0.42, delay: 0.6, ease: [0.22, 1, 0.36, 1] } }}
+          exit={{ opacity: 0, y: 10, transition: { duration: 0.18, ease: "easeIn" } }}
         >
-          Decline
-        </button>
-        <button
-          type="button"
-          className={`${styles.button} ${styles.accept}`}
-          onClick={() => setConsent("granted")}
-        >
-          Accept
-        </button>
-      </div>
-    </aside>
+          <h2 id={`${id}-title`} className={styles.title}>Cookies</h2>
+          <p className={styles.copy}>
+            We&rsquo;d like to use analytics cookies to see which pages people
+            read and how they arrived. They stay off unless you accept, and the
+            site works the same either way.{" "}
+            <Link href="/privacy">Privacy and cookie policy</Link>
+          </p>
+
+          {choosing && (
+            <ul className={styles.choices}>
+              <li>
+                <div>
+                  <span className={styles.choiceName}>Essential</span>
+                  <span className={styles.choiceNote}>Remembers this choice. Nothing else.</span>
+                </div>
+                <span className={styles.always}>Always on</span>
+              </li>
+              <li>
+                <div>
+                  <span className={styles.choiceName} id={`${id}-analytics`}>Analytics</span>
+                  <span className={styles.choiceNote}>Google Analytics. Pages read and how visitors arrived.</span>
+                </div>
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked={analytics}
+                  aria-labelledby={`${id}-analytics`}
+                  className={styles.switch}
+                  onClick={() => setAnalytics((on) => !on)}
+                >
+                  <span aria-hidden="true" />
+                </button>
+              </li>
+            </ul>
+          )}
+
+          <div className={styles.actions}>
+            {choosing ? (
+              <button
+                type="button"
+                className={`${styles.button} ${styles.wide}`}
+                onClick={() => setConsent(analytics ? "granted" : "denied")}
+              >
+                Save my choice
+              </button>
+            ) : (
+              <>
+                <button type="button" className={styles.button} onClick={() => setConsent("denied")}>
+                  Decline
+                </button>
+                <button type="button" className={styles.button} onClick={() => setConsent("granted")}>
+                  Accept
+                </button>
+              </>
+            )}
+          </div>
+          {!choosing && (
+            <button type="button" className={styles.more} onClick={() => setChoosing(true)}>
+              Choose what to allow
+            </button>
+          )}
+        </motion.aside>
+      )}
+    </AnimatePresence>
   );
 }

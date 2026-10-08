@@ -31,3 +31,6 @@
   .footer nav { width: 100%; gap: 16px 22px; }
   .footer nav a { display: inline-flex; align-items: center; min-height: 44px; }
 }
+.pricingLink { display: table; margin: 24px auto 0; padding: 6px 2px; color: var(--content-muted); font-size: 15px; text-decoration: underline; text-decoration-color: #b6c6d859; text-underline-offset: .3em; transition: color 160ms ease, text-decoration-color 160ms ease; }
+.pricingLink:hover { color: var(--content-ink); text-decoration-color: currentColor; }
+@media (prefers-reduced-motion: reduce) { .pricingLink { transition: none; } }

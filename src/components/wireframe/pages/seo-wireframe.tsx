@@ -14,7 +14,7 @@ export default function SeoWireframe() {
         <div><h3>Recognition and conversion</h3><p>Relevant outreach, business profiles and clearer enquiry routes.</p></div>
       </div>
       <p className={styles.small}><strong>£995/month</strong> · Three-month minimum from kickoff. Paid in advance.</p>
-      <p className={styles.small}>Monthly work and reporting follow an agreed plan. <Link href="/working-together#scope">View scope and capacity ↗</Link></p>
+      <p className={styles.small}>Monthly work and reporting follow an agreed plan. <Link href="/pricing#scope">View scope and capacity ↗</Link></p>
       <details id="site-access" className={styles.details}><summary>Working on your existing website</summary><p>We arrange authorised access or cooperate with your website manager. A new website is a separate decision. <Link href="/web-design">Explore Web Design ↗</Link></p></details>
     </Section>
     <Section id="relevant-work" tone="dark" title="Selected work.">
@@ -26,7 +26,7 @@ export default function SeoWireframe() {
     <Section id="start" title="Let’s talk about your business.">
       <p>Bring your website and what needs attention.</p>
       <ActionLink>Book a call ↗</ActionLink>
-      <p className={styles.small}>A £400 introductory Ads trial is available. <Link href="/working-together#ads">Funding and continuation conditions ↗</Link></p>
+      <p className={styles.small}>A £400 introductory Ads trial is available. <Link href="/pricing#ads">Funding and continuation conditions ↗</Link></p>
     </Section>
   </WireframePage>;
 }

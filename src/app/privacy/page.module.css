@@ -1,4 +1,7 @@
 .page {
+  /* Full width up to the cap, and allowed to shrink: without this the cookie table pushed the whole page wider than a phone. */
+  width: 100%;
+  min-width: 0;
   max-width: 44rem;
   margin: 0 auto;
   padding: clamp(4rem, 9vw, 7rem) var(--page-gutter) clamp(5rem, 10vw, 8rem);
@@ -6,7 +9,7 @@
 
 .brand {
   margin: 0 0 0.9rem;
-  font-family: var(--font-brand), serif;
+  font-family: var(--font-home-heading), Arial, sans-serif;
   font-size: 0.8125rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -57,6 +60,11 @@
   text-decoration-thickness: 1px;
 }
 
+/* If the table is still too wide for the screen, it scrolls inside its own box and the page stays put. */
+.tableWrap {
+  overflow-x: auto;
+}
+
 .table {
   width: 100%;
   margin: 1.25rem 0;
@@ -82,7 +90,8 @@
 }
 
 .table code {
-  font-family: var(--font-geist-mono), monospace;
+  overflow-wrap: anywhere;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.8125rem;
   color: var(--ink);
 }
@@ -120,4 +129,28 @@
 .linkButton:focus-visible {
   outline: 2px solid var(--signal-orange);
   outline-offset: 2px;
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1.75rem var(--page-gutter) 2.5rem;
+  font-size: 0.8125rem;
+  color: var(--muted-ink);
+  border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+}
+
+.footer nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+}
+
+.footer a:hover {
+  color: var(--ink);
 }

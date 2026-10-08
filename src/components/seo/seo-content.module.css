@@ -11,8 +11,6 @@
 .hero p { max-width: 870px; color: var(--seo-muted); font-size: clamp(18px, 1.45vw, 22px); font-weight: 400; line-height: 1.5; margin: 28px auto 36px; text-wrap: pretty; animation: reveal 650ms cubic-bezier(.22, 1, .36, 1) 180ms both; }
 .heroAction { animation: reveal 650ms cubic-bezier(.22, 1, .36, 1) 300ms both; }
 .heroAction:focus-within { animation: none; }
-.skipLink { position: absolute; top: 0; left: 24px; transform: translateY(-240px); background: #fff; color: #10283f; padding: 12px 20px; border-radius: 4px; }
-.skipLink:focus { transform: none; }
 .why { background: linear-gradient(180deg, #090a0c00 0%, #090a0cdd 36%, #090a0c 70%); }
 .why .whyTitle { font-size: clamp(26px, 2.6vw, 36px); letter-spacing: -.035em; color: #a4afb8; margin-bottom: 35px; }
 .statement { max-width: 1100px; font-size: clamp(48px, 6.7vw, 96px); font-weight: 500; line-height: 1.08; letter-spacing: -.05em; margin: 0 0 70px; }

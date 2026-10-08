@@ -16,6 +16,10 @@ const nextConfig: NextConfig = {
   // One headers() only: a second key silently replaces the first, which is
   // exactly what the rebase produced and what would have quietly un-noindexed
   // the reference library.
+  // The pricing page used to live at /working-together.
+  async redirects() {
+    return [{ source: "/working-together", destination: "/pricing", permanent: true }];
+  },
   async headers() {
     return [
       ...["/learn/:path*", "/references/:path*"].map((source) => ({

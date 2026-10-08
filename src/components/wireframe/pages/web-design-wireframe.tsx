@@ -16,7 +16,7 @@ export default function WebDesignWireframe() {
       <div className={styles.inclusions}><span>Structure and copy</span><span>Responsive design and development</span><span>Required functions and migration</span></div>
       <p>Agree the plan, approve the work and launch.</p>
       <p className={styles.small}><strong>Around £3,000</strong> · Separately quoted to scope.</p>
-      <Link className={styles.textLink} href="/working-together#options">Website and SEO payment options ↗</Link>
+      <Link className={styles.textLink} href="/pricing#options">Website and SEO payment options ↗</Link>
     </Section>
     <Section id="work" title="Selected websites." tone="dark">
       <div className={styles.projects}>{projects.map(([name, href, context]) => <a className={styles.project} key={name} href={href} target="_blank" rel="noopener noreferrer">
@@ -27,7 +27,7 @@ export default function WebDesignWireframe() {
     <Section id="start" title="What should your website do?">
       <p>Bring a brief, your current site or simply what needs to change.</p>
       <ActionLink>Book a call ↗</ActionLink>
-      <p className={styles.small}>Standalone care is quoted separately. <Link href="/working-together#ownership">Managed-site and ownership conditions ↗</Link></p>
+      <p className={styles.small}>Standalone care is quoted separately. <Link href="/pricing#transfer">Managed-site and ownership conditions ↗</Link></p>
     </Section>
   </WireframePage>;
 }

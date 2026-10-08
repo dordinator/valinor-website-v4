@@ -88,15 +88,15 @@ export function PortalPreview({ standalone = false, translucent = true }: { stan
             <div className={styles.exampleBusiness}><Icon name="grid" />Example business</div>
           </aside>
           <div className={styles.workspace}>
-            <div className={styles.workspaceHeading}><h2>Your workspace</h2><span className={styles.newRequest}><Icon name="plus" />New request</span></div>
+            <div className={styles.workspaceHeading}><p className={styles.workspaceTitle}>Your workspace</p><span className={styles.newRequest}><Icon name="plus" />New request</span></div>
             <div className={styles.stats}>
               <div><Icon name="file" /><p><span>In progress</span><strong>1</strong></p></div>
               <div><Icon name="check" /><p><span>Delivered</span><strong>6</strong></p></div>
               <div><Icon name="grid" /><p><span>Current plan</span><strong>Essential</strong></p></div>
             </div>
             <div className={styles.activity}>
-              <div className={styles.nextDelivery}><Icon name="file" /><div><span className={styles.cardLabel}>Next delivery</span><h3>Service page update</h3><div className={styles.deliveryBottom}><Status /><span className={styles.viewTicket}>View ticket <Arrow /></span></div></div></div>
-              <div className={styles.teamNote}><Icon name="message" /><div><span className={styles.cardLabel}>Unread notes</span><h3>Valinor team</h3><p>The draft is ready for your feedback.</p></div></div>
+              <div className={styles.nextDelivery}><Icon name="file" /><div><span className={styles.cardLabel}>Next delivery</span><p className={styles.cardTitle}>Service page update</p><div className={styles.deliveryBottom}><Status /><span className={styles.viewTicket}>View ticket <Arrow /></span></div></div></div>
+              <div className={styles.teamNote}><Icon name="message" /><div><span className={styles.cardLabel}>Unread notes</span><p className={styles.cardTitle}>Valinor team</p><p>The draft is ready for your feedback.</p></div></div>
             </div>
             <div className={styles.requests}>
               <div className={styles.requestsHeading}><span><Icon name="list" />Recent requests</span><span>View all <Arrow /></span></div>
@@ -120,10 +120,9 @@ export function HomeHero({ showPreview = true, sharedBackground = false, viewpor
     <div className={`${styles.heroStage} ${sharedBackground ? styles.sharedBackground : ""} ${viewport ? styles.viewportHero : ""} ${scrollPreview ? styles.previewLead : ""}`} data-fluid-hero data-scroll-section={viewport && !scrollPreview || undefined}>
     {!sharedBackground && <FluidBackground />}
     <section className={`${styles.hero} ${showPreview ? "" : styles.compactHero} ${headingFont.variable} ${bodyFont.variable}`} aria-labelledby="alternative-hero-heading">
-      <a className={styles.skipLink} href="#hero-end">Skip to services</a>
       <div className={styles.intro}>
         <HeroTitle />
-        <p>We improve your website, search visibility and the journey from interest to enquiry.</p>
+        <p>We improve your search visibility, AI presence, website and the journey from interest to enquiry.</p>
         <div className={styles.ctaReveal}>
           <LiquidCallLink />
         </div>

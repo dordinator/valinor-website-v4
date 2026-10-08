@@ -54,3 +54,5 @@
 }
 @media (max-width: 370px) { .trigger { grid-template-columns: 52px minmax(0, 1fr) 18px; gap: 12px; } .panelInner { padding-left: 64px; } .number { font-size: 37px; } .row[data-open] .number { font-size: 43px; } }
 @media (prefers-reduced-motion: reduce) { .services .heading { opacity: 1 !important; transform: none !important; } .row, .number, .name, .direction, .panel, .panelInner { transition: none; } .panelInner { transform: none; } }
+/* On touch screens of any width the link gets a finger-sized target. The negative margin keeps it sitting exactly where it was. */
+@media (pointer: coarse) and (min-width: 761px) { .detailLink { min-height: 44px; margin-block: -12px; } }

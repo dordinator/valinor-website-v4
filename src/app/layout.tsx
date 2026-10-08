@@ -1,51 +1,29 @@
 import type { Metadata, Viewport } from "next";
-import { Cinzel, Cormorant_Garamond, Geist, Geist_Mono } from "next/font/google";
 import "lenis/dist/lenis.css";
 import "./globals.css";
 import { Analytics } from "@/components/analytics";
 import { AppProviders } from "@/components/app-providers";
 import { CookieBanner } from "@/components/cookie-banner";
+import { bodyFont, headingFont } from "@/components/home-hero/fonts";
+import { SITE_DESCRIPTION } from "@/lib/schema";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const cinzel = Cinzel({
-  variable: "--font-brand",
-  subsets: ["latin"],
-  weight: "400",
-});
-
-const studioSerif = Cormorant_Garamond({
-  variable: "--font-studio",
-  subsets: ["latin"],
-  style: "italic",
-  weight: "300",
-});
+const SITE_TITLE = "Valinor Systems | SEO, AI Search and Web Design";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://valinorsystems.co.uk"),
   title: {
-    default: "Valinor Systems | Web Design, SEO and Google Ads",
+    default: SITE_TITLE,
     template: "%s | Valinor Systems",
   },
-  description:
-    "Valinor Systems is a UK web design and SEO studio. We build fast, high-converting websites and run the Google Ads that grow them.",
+  description: SITE_DESCRIPTION,
   applicationName: "Valinor Systems",
   openGraph: {
     type: "website",
     siteName: "Valinor Systems",
     locale: "en_GB",
     url: "/",
-    title: "Valinor Systems | Web Design, SEO and Google Ads",
-    description:
-      "Valinor Systems is a UK web design and SEO studio. We build fast, high-converting websites and run the Google Ads that grow them.",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
   },
   twitter: {
     card: "summary_large_image",
@@ -56,13 +34,15 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
+  // Matches the navy the pages open on, so the browser's own bars blend into it on phones.
+  themeColor: "#0b1e33",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en-GB"
-      className={`${geistSans.variable} ${geistMono.variable} ${cinzel.variable} ${studioSerif.variable} h-full antialiased`}
+      className={`${bodyFont.variable} ${headingFont.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <AppProviders>{children}</AppProviders>

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   ActionLink,
   Columns,
@@ -32,6 +33,7 @@ export default function GrantsWireframe() {
       <Section title="Let’s discuss your charity." tone="dark">
         <p className={styles.invitation}>Your charity URL and current account status are useful optional starting points.</p>
         <div className={styles.actions}><ActionLink>Book a call ↗</ActionLink></div>
+        <p><Link href="/web-design">Website help</Link> · <Link href="/google-ads">Paid Google Ads</Link> · <Link href="/pricing">Pricing</Link></p>
       </Section>
     </WireframePage>
   );

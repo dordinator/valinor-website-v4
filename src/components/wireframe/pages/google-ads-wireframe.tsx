@@ -10,7 +10,7 @@ export default function GoogleAdsWireframe() {
     <Section id="campaign-work" title="From search to enquiry.">
       <div className={styles.journey}><span>Relevant search</span><span aria-hidden="true">→</span><span>Focused ad</span><span aria-hidden="true">→</span><span>Useful page</span><span aria-hidden="true">→</span><span>Enquiry</span></div>
       <p>We agree the goal and budget, prepare the campaign and tracking, then manage and review it.</p>
-      <p id="introductory-campaign" className={styles.small}>Trying Ads alongside SEO? <Link href="/working-together#ads">See funded introduction and continuation terms ↗</Link></p>
+      <p id="introductory-campaign" className={styles.small}>Trying Ads alongside SEO? <Link href="/pricing#ads">See funded introduction and continuation terms ↗</Link></p>
     </Section>
     <Section id="fees" title="A simple cost example." tone="dark">
       <p><strong>15% of ad spend</strong> · £100/month management minimum. Media spend is separate.</p>
@@ -19,7 +19,7 @@ export default function GoogleAdsWireframe() {
     </Section>
     <Section id="start" title="Discuss a new or existing campaign.">
       <ActionLink>Book a call ↗</ActionLink>
-      <p className={styles.small}><Link href="/web-design">Website help</Link> · <Link href="/google-ad-grants">Charity Ad Grants</Link> · <Link href="/working-together#ads">Fees and conditions</Link></p>
+      <p className={styles.small}><Link href="/web-design">Website help</Link> · <Link href="/google-ad-grants">Charity Ad Grants</Link> · <Link href="/pricing#ads">Fees and conditions</Link></p>
     </Section>
   </WireframePage>;
 }

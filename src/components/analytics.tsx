@@ -12,10 +12,8 @@ import {
 const GA_MEASUREMENT_ID = "G-S61KELM6GL";
 
 /**
- * The host that owns the analytics property. Netlify serves this app on a
- * `*.netlify.app` alias and on a fresh URL per deploy preview, all of which
- * would otherwise fire the tag and land in the same GA stream — as would
- * localhost every time we run the dev server. Gating on the canonical host
+ * The host that owns the analytics property. Preview deployments and
+ * localhost would otherwise fire the tag and land in the same GA stream. Gating on the canonical host
  * keeps the property to real traffic without any IP filtering in the GA UI.
  */
 const CANONICAL_HOST = "valinorsystems.co.uk";
@@ -24,14 +22,13 @@ const CANONICAL_HOST = "valinorsystems.co.uk";
 const neverChanges = () => () => {};
 
 /**
- * Google Analytics, held behind Consent Mode v2.
+ * Google Analytics, loaded only after the visitor accepts.
  *
- * The tag loads for everyone but starts with every storage type DENIED, so
- * no `_ga` cookie is written until the visitor accepts — which is what PECR
- * reg 6 asks for, analytics cookies not being strictly necessary. Under
- * denial gtag still sends cookieless pings, so we keep a rough traffic shape
- * from people who never answer the banner; accepting fires a consent
- * `update` and the same page view is counted properly from then on.
+ * Until then nothing is fetched from Google and nothing is sent: no tag, no
+ * cookieless pings. Analytics cookies are not strictly necessary, so PECR
+ * reg 6 wants consent first, and not loading the tag is the plainest way to
+ * honour that. Once loaded, only analytics storage is granted; the
+ * advertising signals stay denied because the banner never asks about them.
  *
  * Which host is serving us is a per-request fact, and reading it on the
  * server (headers()) would opt the root layout out of static rendering for
@@ -53,37 +50,19 @@ export function Analytics() {
     getConsentServerSnapshot,
   );
 
-  // The grant has to reach a tag that is already running, so it goes out as
-  // a consent update rather than by re-rendering the scripts. gtag may not
-  // exist yet on a slow connection; the queue is a plain array, and pushing
-  // to it before the library loads is how the snippet itself works.
+  // The tag stays mounted for the rest of the page view once it has loaded,
+  // so a later withdrawal has to reach it directly: the opt-out flag stops
+  // further hits and the consent update stops further cookies. (The cookies
+  // already written are cleared in setConsent.)
   useEffect(() => {
-    if (pathname === "/login" || !onCanonicalHost || consent !== "granted") return;
-    const w = window as typeof window & {
-      dataLayer?: unknown[];
-      gtag?: (...args: unknown[]) => void;
-    };
-    const granted = {
-      ad_storage: "granted",
-      ad_user_data: "granted",
-      ad_personalization: "granted",
-      analytics_storage: "granted",
-    };
-    if (typeof w.gtag === "function") {
-      w.gtag("consent", "update", granted);
-      return;
-    }
-    // The inline block below is deferred too, so on a fast click gtag may
-    // not exist yet. The queue is a plain array either way.
-    w.dataLayer = w.dataLayer ?? [];
-    w.dataLayer.push(["consent", "update", granted]);
-  }, [pathname, onCanonicalHost, consent]);
+    if (!onCanonicalHost || consent === null) return;
+    const w = window as typeof window & { gtag?: (...args: unknown[]) => void } & Record<string, unknown>;
+    w[`ga-disable-${GA_MEASUREMENT_ID}`] = consent !== "granted";
+    w.gtag?.("consent", "update", { analytics_storage: consent });
+  }, [onCanonicalHost, consent]);
 
-  if (pathname === "/login" || !onCanonicalHost) return null;
+  if (pathname === "/login" || !onCanonicalHost || consent !== "granted") return null;
 
-  // Mirrors Google's own snippet, external tag first: it is async and needs
-  // a round trip, so the inline block below always reaches the queue first
-  // and the denied default is in place before the library initialises.
   return (
     <>
       <Script
@@ -97,8 +76,7 @@ gtag('consent', 'default', {
   ad_storage: 'denied',
   ad_user_data: 'denied',
   ad_personalization: 'denied',
-  analytics_storage: 'denied',
-  wait_for_update: 500
+  analytics_storage: 'granted'
 });
 gtag('set', 'url_passthrough', true);
 gtag('js', new Date());

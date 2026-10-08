@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import { useId, useRef, useState, type KeyboardEvent } from "react";
 import { LiquidCallLink } from "@/components/home-hero/liquid-call-link";
+import { seoFaqs as faqs } from "./seo-faqs";
 import { SeoWhyStory } from "./seo-why-story";
 import styles from "./seo-content.module.css";
 
@@ -30,13 +31,6 @@ const workCategories = [
   ] },
 ] as const;
 
-const faqs = [
-  { id: "site-access", question: "Is my existing website suitable?", answer: <p>We start by reviewing your current website and arranging authorised access, or working with your website manager. If the site needs replacing, we’ll explain why and discuss the options. <Link href="/web-design">Explore web design →</Link></p> },
-  { id: "included", question: "What’s included, and what does it cost?", answer: <p>Core is £995/month for agreed content, technical SEO, relevant authority work and website improvements, with monthly reporting. Hosting, security and support are included for agreed managed sites. The higher-capacity £2,995 tier and content quantities remain proposed. <Link href="/working-together#options">Compare packages →</Link></p> },
-  { id: "ai-search", question: "Is AI search included?", answer: <p>Yes. AEO — answer engine optimisation — is part of the SEO work. We research customer questions, create useful answers, improve page structure and use suitable structured data. We review available AI visibility alongside organic search; appearances and citations cannot be guaranteed.</p> },
-  { id: "progress", question: "How do we assess progress?", answer: <p>We record a starting point, agree priorities and report what changed each month. We look at available search visibility, relevant visits and reliable enquiry data, then use the findings to decide the next work. A monthly strategy review call is available at your discretion. Timing depends on your starting point, competition and the changes needed.</p> },
-  { id: "minimum-term", question: "What’s the minimum term?", answer: <p>Three months from kickoff, including any build time, with fees paid in advance. After that, service continues monthly with 30 days’ written notice. Paying six months of SEO before kickoff waives the agreed website build fee; managed ownership and transfer conditions still apply. <Link href="/working-together#payments">Payment and website terms →</Link></p> },
-] as const;
 
 const ease = [.4, 0, .2, 1] as const;
 
@@ -103,7 +97,7 @@ function Faq() {
       <div className={styles.questions}>
         {faqs.map((faq, index) => <article id={faq.id} className={styles.question} key={faq.id} data-open={open === index || undefined}>
           <h3><button type="button" id={`${id}-question-${index}`} aria-expanded={open === index} aria-controls={`${id}-answer-${index}`} onClick={() => setOpen(current => current === index ? null : index)}>{faq.question}<span className={styles.plus} aria-hidden="true" /></button></h3>
-          <div className={styles.answer} role="region" id={`${id}-answer-${index}`} aria-labelledby={`${id}-question-${index}`} aria-hidden={open !== index} inert={open !== index}><div>{faq.answer}</div></div>
+          <div className={styles.answer} role="region" id={`${id}-answer-${index}`} aria-labelledby={`${id}-question-${index}`} aria-hidden={open !== index} inert={open !== index}><div><p>{faq.answer}{"link" in faq && <> <Link href={faq.link.href}>{faq.link.label}</Link></>}</p></div></div>
         </article>)}
       </div>
     </div>
@@ -114,9 +108,8 @@ export function SeoContent() {
   const reduced = useReducedMotion() ?? false;
   return <main className={styles.content}>
     <section className={`${styles.scene} ${styles.hero}`} aria-labelledby="seo-title">
-      <a className={styles.skipLink} href="#why-seo">Skip to why SEO matters</a>
       <div className={styles.heroInner}>
-        <h1 id="seo-title"><span>Useful content.</span><span>Better search visibility.</span></h1>
+        <h1 id="seo-title"><span>SEO and online presence.</span><span>Better search visibility.</span></h1>
         <p>SEO, AEO and website improvements that help suitable customers find and understand your business.</p>
         <div className={styles.heroAction}><LiquidCallLink /></div>
       </div>

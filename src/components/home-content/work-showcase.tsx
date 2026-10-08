@@ -26,15 +26,14 @@ const projects = [
   },
   {
     name: "RT Performance", headline: ["Different businesses.", "A website with its own character."],
-    href: "https://rt-performance-2.vercel.app/",
+    href: null,
     image: "/assets/studio-previews/rt-performance-hero.png",
     description: "An automotive website demo showcasing the cars and the work.", demo: true,
   },
 ] as const;
 
-// Match the scroll-lab's word reveal, without adding another scroll controller.
+// A word-by-word reveal, without adding another scroll controller.
 const wordSpring = { stiffness: 130, damping: 30, mass: .35 };
-const revealEntry = .78;
 
 function RevealWord({ word, index, total, progress, reduced }: {
   word: string; index: number; total: number; progress: MotionValue<number>; reduced: boolean;
@@ -52,9 +51,9 @@ function RevealWord({ word, index, total, progress, reduced }: {
 function WorkStatement({ project, rowRef, active, reduced }: {
   project: typeof projects[number]; rowRef: RefObject<HTMLLIElement | null>; active: boolean; reduced: boolean;
 }) {
-  // Use the project's height so every phrase finishes before the next row,
-  // including shorter previews on laptop-sized viewports.
-  const { scrollYProgress } = useScroll({ target: rowRef, offset: [`start ${revealEntry}`, `end ${revealEntry}`] });
+  // The phrase writes itself in over the last stretch of the project's rise, and is complete as the project
+  // reaches the middle of the screen, level with this text.
+  const { scrollYProgress } = useScroll({ target: rowRef, offset: ["start 60%", "center 52%"] });
   const eased = useSpring(scrollYProgress, wordSpring);
   const lines = project.headline.map(line => line.split(" "));
   const total = lines[0].length + lines[1].length;
@@ -75,15 +74,26 @@ function WorkStatement({ project, rowRef, active, reduced }: {
 function Project({ project, rowRef }: { project: typeof projects[number]; rowRef: RefObject<HTMLLIElement | null> }) {
   const ref = rowRef;
   const reduced = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const opacity = useTransform(scrollYProgress, [0, .2, .7, 1], [.4, 1, 1, .4]);
+  // Progress follows the project's own centre: 0 as it enters at the bottom of the screen, .5 when it is level with the
+  // pinned text in the middle, 1 as it leaves at the top. It is sharp, bright and full size only around .5, so each
+  // project comes into focus exactly in line with its text. All four are the same size.
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["center end", "center start"] });
+  const opacity = useTransform(scrollYProgress, [.18, .42, .58, .82], [.3, 1, 1, .3]);
+  const scale = useTransform(scrollYProgress, [.18, .42, .58, .82], [.92, 1, 1, .92]);
+  const filter = useTransform(scrollYProgress, [.18, .42, .58, .82], ["blur(7px)", "blur(0px)", "blur(0px)", "blur(7px)"]);
 
   return (
     <motion.li ref={ref} className={styles.project} style={{ opacity: reduced ? 1 : opacity }}>
       <div className={styles.projectContent}>
-        <a className={styles.image} href={project.href} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.name} ${project.demo ? "demo" : "website"}, opens in a new tab`}>
-          <Image src={project.image} alt={`${project.name} website preview`} width={1280} height={720} sizes="(max-width: 800px) 90vw, (max-width: 1400px) 43vw, 550px" />
-        </a>
+        <motion.div className={styles.focus} style={reduced ? undefined : { scale, filter }}>
+          {project.href
+            ? <a className={styles.image} href={project.href} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.name} website, opens in a new tab`}>
+              <Image src={project.image} alt={`${project.name} website preview`} width={1280} height={720} sizes="(max-width: 800px) 90vw, (max-width: 1400px) 43vw, 550px" />
+            </a>
+            : <div className={styles.image}>
+              <Image src={project.image} alt={`${project.name} website preview`} width={1280} height={720} sizes="(max-width: 800px) 90vw, (max-width: 1400px) 43vw, 550px" />
+            </div>}
+        </motion.div>
         <div className={styles.description}>
           <h3>{project.name}</h3>
           {project.demo && <span className={styles.demo}>Demo website</span>}
@@ -116,12 +126,14 @@ export function WorkShowcase() {
         setActive(0);
         return;
       }
-      // A new statement starts as its project enters the same reveal window.
-      const entry = window.innerHeight * revealEntry;
-      let incoming = 0;
+      // The text belongs to whichever project is nearest the middle of the screen, so text and image change together.
+      const line = window.innerHeight / 2;
+      let incoming = 0, nearest = Infinity;
       rowRefs.forEach((ref, index) => {
         if (!ref.current) return;
-        if (ref.current.getBoundingClientRect().top <= entry) incoming = index;
+        const bounds = ref.current.getBoundingClientRect();
+        const distance = Math.abs(bounds.top + bounds.height / 2 - line);
+        if (distance < nearest) { nearest = distance; incoming = index; }
       });
       setActive(current => current === incoming ? current : incoming);
     };

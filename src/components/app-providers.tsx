@@ -69,12 +69,6 @@ function SoftSectionSnap() {
 }
 
 export function AppProviders({ children }: AppProvidersProps) {
-  const pathname = usePathname();
-  // The review playground owns its adjustable scroller; regular pages keep
-  // their existing scroll settings and section snapping.
-  if (pathname === "/scroll-lab") {
-    return <MotionConfig reducedMotion="user">{children}</MotionConfig>;
-  }
   return (
     <MotionConfig reducedMotion="user">
       <ReactLenis root options={{ anchors: true, autoRaf: true, lerp: .08, virtualScroll: paceWorkScroll }}>

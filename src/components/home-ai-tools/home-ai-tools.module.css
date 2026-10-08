@@ -1,0 +1,14 @@
+/* One running statement in two tones, the same device as the "Selected work" statements further down:
+   the claim in full ink, what it is for in the muted ink. No columns, labels or numbering. */
+.section { position: relative; z-index: 1; background: #090a0c; color: #edf2f5; font-family: var(--font-home-body), Arial, sans-serif; padding: clamp(72px, 12svh, 140px) 0 clamp(60px, 10svh, 120px); scroll-margin-top: 82px; }
+.statement { width: min(1280px, calc(100% - 96px)); margin: auto; }
+.statement { font-size: clamp(30px, 3.6vw, 52px); line-height: 1.22; letter-spacing: -.035em; }
+.statement h2 { display: inline; margin: 0; font: inherit; font-weight: 500; letter-spacing: inherit; }
+.statement span { color: #8f9ba6; }
+.statement { max-width: 1280px; padding-right: clamp(0px, 14vw, 260px); box-sizing: border-box; text-wrap: pretty; }
+@media (max-width: 1050px) { .statement { width: calc(100% - 64px); padding-right: 0; } }
+@media (max-width: 760px) {
+  .section { padding: 60px 0 52px; scroll-margin-top: 74px; }
+  .statement { width: calc(100% - 40px); }
+  .statement { font-size: clamp(27px, 7.2vw, 34px); line-height: 1.24; }
+}
