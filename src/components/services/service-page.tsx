@@ -89,7 +89,7 @@ function StoryChapter({ chapter, row, index, reduced }: { chapter: ServiceStoryC
 }
 
 /** Service-specific visuals explain relevance; deliverables live in their own section. */
-export function ServiceWhyStory({ id, title, chapters }: { id: string; title: string; chapters: readonly ServiceStoryChapter[] }) {
+export function ServiceWhyStory({ id, title, chapters, className = "" }: { id: string; title: string; chapters: readonly ServiceStoryChapter[]; className?: string }) {
   const list = useRef<HTMLUListElement>(null);
   const first = useRef<HTMLLIElement>(null), second = useRef<HTMLLIElement>(null), third = useRef<HTMLLIElement>(null);
   const rows = [first, second, third];
@@ -116,7 +116,7 @@ export function ServiceWhyStory({ id, title, chapters }: { id: string; title: st
     return () => { cancelAnimationFrame(frame); observer.disconnect(); window.removeEventListener("scroll", schedule); window.removeEventListener("resize", schedule); };
   }, []);
 
-  return <section id={id} className={styles.story} aria-labelledby={`${id}-title`}>
+  return <section id={id} className={`${styles.story} ${className}`} aria-labelledby={`${id}-title`}>
     <h2 id={`${id}-title`} className="sr-only">{title}</h2>
     <div className={styles.storyLayout}>
       <div className={styles.sidebar}><div className={styles.sticky}>
