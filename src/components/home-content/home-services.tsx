@@ -56,9 +56,8 @@ export function HomeServices({ reduced }: { reduced: boolean }) {
         {services.map((service, index) => {
           const open = expanded === index;
           return <article key={service.id} className={styles.row} data-service-row data-active={open || undefined} data-open={open || undefined}
-            onPointerEnter={event => { if (event.pointerType === "mouse") setExpanded(index); }}
-            onFocusCapture={() => setExpanded(index)}>
-            <h3 className={styles.rowHeading}><button type="button" className={styles.trigger} id={`${id}-trigger-${service.id}`} aria-expanded={open} aria-controls={`${id}-panel-${service.id}`} data-service-toggle={index} onKeyDown={event => focusRow(event, index)} onClick={() => setExpanded(index)}>
+            onPointerEnter={event => { if (event.pointerType === "mouse" && window.matchMedia("(min-width: 801px) and (hover: hover) and (pointer: fine)").matches) setExpanded(index); }}>
+            <h3 className={styles.rowHeading}><button type="button" className={styles.trigger} id={`${id}-trigger-${service.id}`} aria-expanded={open} aria-controls={`${id}-panel-${service.id}`} data-service-toggle={index} onKeyDown={event => focusRow(event, index)} onClick={() => setExpanded(current => current === index ? -1 : index)}>
               <span className={styles.number} aria-hidden="true">{String(index + 1).padStart(2, "0")}<span className={styles.numberStop}>.</span></span>
               <span className={styles.name}>{service.name}</span>
               <span className={styles.direction}><Arrow /></span>

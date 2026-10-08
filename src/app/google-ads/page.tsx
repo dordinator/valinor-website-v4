@@ -1,14 +1,19 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/metadata";
-import GoogleAdsWireframe from "@/components/wireframe/pages/google-ads-wireframe";
 import { JsonLd } from "@/components/seo/structured-data";
 import { pageGraph, serviceSchema } from "@/lib/schema";
+import { ServicePageShell } from "@/components/services/service-page";
+import { GoogleAdsHero } from "@/components/services/google-ads/hero";
+import { GoogleAdsWhy } from "@/components/services/google-ads/why";
+import { GoogleAdsDeliverables } from "@/components/services/google-ads/deliverables";
+import { GoogleAdsFaq } from "@/components/services/google-ads/faq";
+import { GoogleAdsClosing } from "@/components/services/google-ads/closing";
 
-const DESCRIPTION = "Targeted Google Search campaigns with conversion tracking and regular review, set up and managed by Valinor Systems.";
+const DESCRIPTION = "Focused Google Search campaigns, useful landing pages and clear results reviews. Discuss a new or existing campaign with Valinor Systems.";
 
 const schema = pageGraph(
   { name: "Google Ads", description: DESCRIPTION, path: "/google-ads" },
-  serviceSchema({ name: "Google Ads management", serviceType: "Pay-per-click advertising management", description: DESCRIPTION, path: "/google-ads" }),
+  serviceSchema({ name: "Google Ads", serviceType: "Google Ads management", description: DESCRIPTION, path: "/google-ads" }),
 );
 
 export const metadata: Metadata = {
@@ -16,5 +21,14 @@ export const metadata: Metadata = {
 };
 
 export default function GoogleAdsPage() {
-  return <><JsonLd data={schema} /><GoogleAdsWireframe /></>;
+  return (
+    <ServicePageShell>
+      <JsonLd data={schema} />
+      <GoogleAdsHero />
+      <GoogleAdsWhy />
+      <GoogleAdsDeliverables />
+      <GoogleAdsFaq />
+      <GoogleAdsClosing />
+    </ServicePageShell>
+  );
 }
