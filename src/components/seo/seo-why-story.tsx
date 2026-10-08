@@ -6,9 +6,9 @@ import { Fragment, useEffect, useRef, useState, type ReactNode, type RefObject }
 import styles from "./seo-why-story.module.css";
 
 const chapters = [
-  { id: "search", statement: "Be found when someone needs your service.", title: "Search & AI discovery", caption: "Connect relevant searches and questions to clear information about your business.", description: "The same service page supports an illustrative search preview and AI answer. Inclusion and AI citations are not guaranteed." },
-  { id: "enquiry", statement: "Help interest become an enquiry.", title: "An easier decision", caption: "Answer practical questions and make the next step straightforward.", description: "Information about suitability, location and what to expect connects to a relevant class choice and enquiry route." },
-  { id: "resource", statement: "Build a useful resource over time.", title: "More ways to be found", caption: "Connected service pages and guides answer more of your customers’ questions.", description: "The original service page connects to guides for a first visit, different session types and practical preparation. These are useful additions, not an invented growth forecast." },
+  { id: "search", statement: "Be found when someone needs your service.", title: "Search & AI discovery", caption: "Connect relevant searches and questions to clear information about your business.", description: "An illustrative AI search recommendation uses location, service and timetable information from a fictional website, with an explicit reference to that page. Inclusion and citations are not guaranteed." },
+  { id: "enquiry", statement: "Help interest become an enquiry.", title: "An easier decision", caption: "Answer practical questions and make the next step straightforward.", description: "Beginner-friendly groups lead to a suitable class, studio location helps plan a visit, and the timetable offers a clear enquiry route." },
+  { id: "resource", statement: "Build a useful resource over time.", title: "More ways to be found", caption: "Connected service pages and guides answer more of your customers’ questions.", description: "A first-visit guide answers questions about clothing, equipment and arrival. Matching facts appear in an illustrative AI answer with a source reference; inclusion and citations are not guaranteed." },
 ] as const;
 type Chapter = typeof chapters[number];
 type FactKey = "location" | "sessions" | "next";
@@ -17,6 +17,16 @@ const facts: { key: FactKey; text: string }[] = [
   { key: "sessions", text: "Group and private sessions" },
   { key: "next", text: "Timetable and booking" },
 ];
+const detailLabels = {
+  search: ["Location", "Services", "Next step"],
+  enquiry: ["Class suitability", "Location", "Next step"],
+  resource: ["Clothing", "Equipment", "Arrival"],
+} as const;
+const explanations = {
+  search: "Someone asks AI for a local recommendation. Relevant website information can help it describe your business and reference the source. Inclusion is not guaranteed.",
+  enquiry: "The visitor can see whether a class suits them, where to go and how to start. The matching labels show which page detail supports each decision.",
+  resource: "Content SEO answers a specific customer question. Clear, useful information can also support AI answers that link to your guide. Inclusion is not guaranteed.",
+} as const;
 const spring = { stiffness: 130, damping: 30, mass: .35 };
 const entry = .8;
 
@@ -39,81 +49,79 @@ function Highlight({ children, field, index, progress, reduced, source = false }
 function SourcePage({ chapter, progress, reduced }: { chapter: Chapter; progress: MotionValue<number>; reduced: boolean }) {
   const enquiry = chapter.id === "enquiry";
   const resource = chapter.id === "resource";
-  const copy = enquiry ? ["Who the classes suit", "Where we meet", "What to expect"] : resource ? ["Local Pilates classes", "Group and private sessions", "Timetable and booking"] : facts.map(fact => fact.text);
-
-  return <div className={styles.sourcePage} aria-label="Fictional Riverside Pilates webpage">
-    <div className={styles.siteHeader}><strong>Riverside Pilates</strong><span>Classes · About</span></div>
-    <Image className={styles.studioImage} src="/assets/seo/illustrative-pilates-studio.png" alt="" width={1619} height={971} sizes="(max-width: 600px) 70vw, (max-width: 1100px) 40vw, 24vw" />
+  const copy = enquiry ? ["Beginner-friendly groups", "Studio in St Albans", "Timetable & first visit"] : resource ? ["Comfortable clothing", "Check mat availability", "Confirm arrival time"] : ["St Albans", "Group and private sessions", "Timetable and booking"];
+  const heading = enquiry ? "On-page SEO · Service page" : resource ? "Content SEO · Helpful guide" : "AI search · Your website";
+  return <div className={styles.sourcePage} aria-label={enquiry ? "Fictional Riverside Pilates webpage" : resource ? "Fictional Riverside Pilates guide" : "Fictional Riverside Pilates service information"}>
+    <div className={styles.panelHeader}><strong>{heading}</strong><span>{enquiry ? "Information on the website" : resource ? "A useful answer on your website" : "Service information on your website"}</span></div>
+    <div className={styles.siteHeader}><strong>Riverside Pilates</strong><span>{enquiry ? "Classes · About" : resource ? "Guides · Classes" : "Classes · About"}</span></div>
+    {enquiry ? <Image className={styles.studioImage} src="/assets/seo/illustrative-pilates-studio.png" alt="" width={1619} height={971} sizes="(max-width: 600px) 70vw, (max-width: 1100px) 40vw, 24vw" /> : resource ? <div className={styles.articlePreview}><Icon type="file" /><div><span>First-visit guide</span><strong>What should I bring to my first Pilates class?</strong></div></div> : <div className={styles.profilePreview}><span className={styles.profileInitial} aria-hidden="true"><Icon type="file" /></span><div><strong>Local Pilates classes</strong><span className={styles.pageAddress}>riversidepilates.example/classes</span><small>Location, services and how to get started</small></div></div>}
     <div className={styles.siteBody}>
-      <p className={styles.siteTitle}>Local Pilates classes</p>
+      <p className={styles.siteTitle}>{enquiry ? "Local Pilates classes" : resource ? "Before your first class" : "Information on the page"}</p>
       <ul className={styles.sourceFacts}>{facts.map((fact, index) => <li key={fact.key}>
-        <Icon type={fact.key} /><Highlight field={fact.key} index={index} progress={progress} reduced={reduced} source>{copy[index]}</Highlight>
+        <Icon type={resource ? "file" : enquiry ? (["sessions", "location", "next"] as const)[index] : fact.key} /><div className={styles.detail}><span className={styles.detailLabel}>{detailLabels[chapter.id][index]}</span><Highlight field={fact.key} index={index} progress={progress} reduced={reduced} source>{copy[index]}</Highlight></div>
       </li>)}</ul>
-      <p className={styles.siteDescription}>{enquiry ? "Explore who the sessions suit, where they take place and how to get started." : resource ? "Explore the classes and useful guides, then choose the next step that suits you." : "Explore class types, location and timetable, then choose the next step that suits you."}</p>
-      {(enquiry || resource) && <span className={styles.siteAction}>{resource ? "Explore our guides" : "View timetable"} <span aria-hidden="true">→</span></span>}
+      <p className={styles.siteDescription}>{enquiry ? "Find a class that suits you, see where we meet and know what to expect." : resource ? "A practical guide with clear answers, connected to the relevant class page." : "Your page explains where you work, which sessions you offer and how someone can find a suitable class."}</p>
+      {(enquiry || resource) && <span className={styles.siteAction}>{resource ? "See beginner classes" : "See classes & enquire"} <span aria-hidden="true">→</span></span>}
     </div>
   </div>;
 }
 
 function DiscoveryOutput({ progress, reduced }: { progress: MotionValue<number>; reduced: boolean }) {
   return <div className={styles.output}>
-    <p className={styles.outputLabel}>Search & AI previews</p>
     <div className={styles.outputSurface}>
-      <div className={styles.query}><Icon type="search" /><span>Pilates classes in St Albans</span></div>
-      <div className={styles.searchResult}>
-        <p className={styles.resultTitle}>Local Pilates classes — Riverside Pilates</p>
-        <p className={styles.resultUrl}>example.com/classes</p>
-        <div className={styles.targetRows}>{facts.slice(0, 2).map((fact, index) => <p key={fact.key}><Highlight field={fact.key} index={index} progress={progress} reduced={reduced}>{fact.text}</Highlight></p>)}</div>
+      <div className={styles.panelHeader}><strong>AI search recommendation</strong><span>Customer view · Asking AI for a local option</span></div>
+      <div className={styles.discoveryQuestion}><span>You ask</span><p>Where can I try Pilates in St Albans?</p></div>
+      <div className={styles.discoveryAnswer}>
+        <span className={styles.assistantLabel}>AI answer · Illustrative example</span>
+        <p className={styles.resultTitle}>Riverside Pilates <sup className={styles.sourceRef} aria-label="Source 1">[1]</sup></p>
+        <p><Highlight field="location" index={0} progress={progress} reduced={reduced}>St Albans</Highlight> — Riverside Pilates is a local option to explore.</p>
+        <p><Highlight field="sessions" index={1} progress={progress} reduced={reduced}>Group and private sessions</Highlight> are listed on its website, so you can compare the formats.</p>
+        <p><Highlight field="next" index={2} progress={progress} reduced={reduced}>Timetable and booking</Highlight> details are on the class page when you’re ready to choose a session.</p>
       </div>
-      <div className={styles.aiExcerpt}>
-        <p className={styles.aiLabel}>Illustrative AI answer</p>
-        <p className={styles.aiQuestion}>How can I find a suitable session?</p>
-        <p><Highlight field="next" index={2} progress={progress} reduced={reduced}>Next step: View the timetable</Highlight></p>
-        <div className={styles.citation}><Icon type="file" /><span>Riverside Pilates · Classes</span><span aria-hidden="true">↗</span></div>
-      </div>
+      <div className={styles.discoverySource}><span>Source [1] · Website used in this answer</span><strong>Local Pilates classes — Riverside Pilates</strong><small>riversidepilates.example/classes</small></div>
     </div>
-    <p className={styles.outputNote}>Illustrative previews. Inclusion and AI citations are not guaranteed.</p>
+    <p className={styles.outputNote}>Illustrative AI answer. Inclusion and citations are not guaranteed.</p>
   </div>;
 }
 
 function EnquiryOutput({ progress, reduced }: { progress: MotionValue<number>; reduced: boolean }) {
   const choices = [
-    { title: "Group class", copy: "Explore the class types and who they suit." },
-    { title: "Private session", copy: "Check where sessions take place." },
-    { title: "Introductory conversation", copy: "Ask questions and find a suitable next step." },
+    { title: "A beginner group class", copy: "A suitable starting point if you are new to Pilates." },
+    { title: "At the St Albans studio", copy: "Know where to go before choosing a session." },
+    { title: "A time that works for you", copy: "Check the timetable and ask about your first visit." },
   ];
   return <div className={styles.output}>
-    <p className={styles.outputLabel}>Enquiry preview</p>
     <div className={styles.outputSurface}>
-      <p className={styles.outputTitle}>Choose a session</p>
-      <p className={styles.outputDescription}>Find a class type and a useful next step.</p>
+      <div className={styles.panelHeader}><strong>Plan your first class</strong><span>Customer view · Before enquiring</span></div>
       <div className={styles.choices}>{choices.map((choice, index) => <div key={choice.title}>
+        <span className={styles.detailLabel}>{detailLabels.enquiry[index]}</span>
         <Highlight field={facts[index].key} index={index} progress={progress} reduced={reduced}>{choice.title}</Highlight>
         <p>{choice.copy}</p>
       </div>)}</div>
-      <span className={styles.continue}>Continue <span aria-hidden="true">→</span></span>
+      <span className={styles.continue}>Enquire about a class <span aria-hidden="true">→</span></span>
     </div>
     <p className={styles.outputNote}>Illustrative enquiry journey; this is not a booking form.</p>
   </div>;
 }
 
 function ResourceOutput({ progress, reduced }: { progress: MotionValue<number>; reduced: boolean }) {
-  const guides = [
-    { title: "Your first class", question: "What happens at a first session?" },
-    { title: "Group or private sessions?", question: "Which class type suits me?" },
-    { title: "Preparing for your visit", question: "What should I bring?" },
+  const answers = [
+    { title: "Comfortable clothing", copy: "Wear something you can move in comfortably." },
+    { title: "Check mat availability", copy: "Ask the studio whether a mat is provided." },
+    { title: "Confirm arrival time", copy: "Check when to arrive before your first session." },
   ];
   return <div className={styles.output}>
-    <p className={styles.outputLabel}>Connected guides</p>
     <div className={styles.outputSurface}>
-      <p className={styles.outputTitle}>Questions people ask.</p>
-      <div className={styles.guides}>{guides.map((guide, index) => <div key={guide.title}>
-        <span className={styles.guideLabel}><Icon type="file" />Useful guide</span>
-        <Highlight field={facts[index].key} index={index} progress={progress} reduced={reduced}>{guide.title}</Highlight>
-        <p>{guide.question}</p>
+      <div className={styles.panelHeader}><strong>AI answer preview</strong><span>Customer view · Researching a first visit</span></div>
+      <div className={styles.answerQuestion}><Icon type="search" /><span>What should I bring to Pilates?</span></div>
+      <div className={styles.guides}>{answers.map((answer, index) => <div key={answer.title}>
+        <span className={styles.guideLabel}><Icon type="file" />{detailLabels.resource[index]}</span>
+        <Highlight field={facts[index].key} index={index} progress={progress} reduced={reduced}>{answer.title}</Highlight>
+        <p>{answer.copy}</p>
       </div>)}</div>
+      <div className={styles.answerSource}><Icon type="file" /><span>Source: Riverside Pilates · First-visit guide</span></div>
     </div>
-    <p className={styles.outputNote}>Illustrative content connections.</p>
+    <p className={styles.outputNote}>Illustrative AI answer. Inclusion and citations are not guaranteed.</p>
   </div>;
 }
 
@@ -149,8 +157,13 @@ function Connections({ root, progress, reduced }: { root: RefObject<HTMLDivEleme
         const from = source.getBoundingClientRect(), to = target.getBoundingClientRect();
         const fromX = from.right - bounds.left + 2, fromY = from.top + from.height / 2 - bounds.top;
         const toX = to.left - bounds.left - 5, toY = to.top + to.height / 2 - bounds.top;
-        const mid = (fromX + toX) / 2;
-        connections.push({ field: fact.key, fromX, fromY, toX, toY, path: `M ${fromX} ${fromY} C ${mid} ${fromY}, ${mid} ${toY}, ${toX} ${toY}` });
+        // Leave each surface horizontally before bending, keeping lines off its copy.
+        const sourceBounds = source.closest(`.${styles.sourcePage}`)?.getBoundingClientRect();
+        const targetBounds = target.closest(`.${styles.outputSurface}`)?.getBoundingClientRect();
+        const sourceEdge = sourceBounds ? sourceBounds.right - bounds.left + 8 : fromX;
+        const targetEdge = targetBounds ? targetBounds.left - bounds.left - 8 : toX;
+        const mid = (sourceEdge + targetEdge) / 2;
+        connections.push({ field: fact.key, fromX, fromY, toX, toY, path: `M ${fromX} ${fromY} L ${sourceEdge} ${fromY} C ${mid} ${fromY}, ${mid} ${toY}, ${targetEdge} ${toY} L ${toX} ${toY}` });
       }
       setGeometry(previous => {
         const next = { width: bounds.width, height: bounds.height, connections };
@@ -198,13 +211,13 @@ function StoryChapter({ chapter, row, reduced }: { chapter: Chapter; row: RefObj
     <figure className={styles.chapterFigure} aria-labelledby={`seo-caption-${chapter.id}`}>
       <div className={styles.visual}>
         <p className={styles.illustrationLabel}>Illustrative example · Fictional business</p>
-        <div className={styles.diagram} ref={diagram}>
+        <div className={`${styles.diagram} ${chapter.id === "search" ? styles.discoveryTheme : chapter.id === "resource" ? styles.contentTheme : ""}`} ref={diagram}>
           <SourcePage chapter={chapter} progress={progress} reduced={reduced} />
           {chapter.id === "search" ? <DiscoveryOutput progress={progress} reduced={reduced} /> : chapter.id === "enquiry" ? <EnquiryOutput progress={progress} reduced={reduced} /> : <ResourceOutput progress={progress} reduced={reduced} />}
           <Connections root={diagram} progress={progress} reduced={reduced} />
         </div>
       </div>
-      <figcaption id={`seo-caption-${chapter.id}`} className={styles.caption}><h3>{chapter.title}</h3><p>{chapter.caption}</p><span className="sr-only">{chapter.description}</span></figcaption>
+      <figcaption id={`seo-caption-${chapter.id}`} className={styles.caption}><h3>{chapter.title}</h3><p>{chapter.caption}</p><div className={styles.explanation}><strong>What this shows</strong><p>{explanations[chapter.id]}</p></div><span className="sr-only">{chapter.description}</span></figcaption>
     </figure>
   </li>;
 }
