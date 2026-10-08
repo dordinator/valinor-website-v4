@@ -4,6 +4,7 @@ import { ScrollPreview } from "@/components/home-hero/scroll-preview";
 import { HomeWireframe } from "@/components/wireframe/pages/home-wireframe";
 import { StructuredData } from "@/components/seo/structured-data";
 import { FluidBackground } from "@/components/home-hero/fluid-background";
+import { HomeStatistics } from "@/components/home-statistics/home-statistics";
 import styles from "./home.module.css";
 
 export const metadata: Metadata = {
@@ -20,6 +21,7 @@ export default function Home() {
       <FluidBackground fullPage />
       <HomeHero showPreview={false} sharedBackground viewport scrollPreview />
       <ScrollPreview><PortalPreview standalone /></ScrollPreview>
+      <HomeStatistics />
       <HomeWireframe />
     </div>
   );

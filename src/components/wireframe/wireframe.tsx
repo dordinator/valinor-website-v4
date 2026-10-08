@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { HomeHeader } from "@/components/home-hero/home-hero";
 import { bodyFont, headingFont } from "@/components/home-hero/fonts";
 import styles from "./wireframe.module.css";
+import { BOOKING_URL } from "@/lib/booking";
 
 export const reviewPages = [
   ["Home", "/"], ["SEO", "/seo"], ["Web Design", "/web-design"],
@@ -29,7 +30,7 @@ export function Columns({ children }: { children: ReactNode }) { return <div cla
 export function Panel({ title, children }: { title?: string; children: ReactNode }) { return <div className={styles.panel}>{title && <h3>{title}</h3>}{children}</div>; }
 export function Placeholder({ label, children }: { label: string; children?: ReactNode }) { return <div className={styles.placeholder}><span>{label}</span>{children}</div>; }
 export function Note({ children }: { children: ReactNode }) { return <div className={styles.note}>{children}</div>; }
-export function ActionLink({ href = "/contact#book", children }: { href?: string; children: ReactNode }) { return <Link className={styles.action} href={href}>{children}</Link>; }
+export function ActionLink({ href = BOOKING_URL, children }: { href?: string; children: ReactNode }) { return <Link className={styles.action} href={href}>{children}</Link>; }
 export function FAQ({ items }: { items: { question: string; answer: ReactNode }[] }) { return <div className={styles.faq}>{items.map(({ question, answer }) => <details key={question}><summary>{question}<span aria-hidden="true">+</span></summary><div>{answer}</div></details>)}</div>; }
 export function WireframeFooter() {
   return <footer className={`${styles.footer} ${bodyFont.variable}`}><div><span>Valinor Systems · Wireframe preview</span><nav aria-label="Footer navigation"><Link href="/working-together">Options &amp; pricing</Link><Link href="/contact">Contact</Link><Link href="/login">Client portal</Link><Link href="/privacy">Privacy &amp; cookies</Link></nav></div></footer>;

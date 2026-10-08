@@ -9,12 +9,13 @@ const projects = [
 ];
 export default function WebDesignWireframe() {
   return <WireframePage>
-    <PageIntro title="A website built around your business." price={<><strong>Around £3,000</strong> · Separately quoted to scope.</>}>
+    <PageIntro title="A website built around your business.">
       <p>Clear content, considered design and a straightforward next step. Standalone or alongside SEO.</p>
     </PageIntro>
     <Section id="project" title="The essentials, considered together.">
       <div className={styles.inclusions}><span>Structure and copy</span><span>Responsive design and development</span><span>Required functions and migration</span></div>
       <p>Agree the plan, approve the work and launch.</p>
+      <p className={styles.small}><strong>Around £3,000</strong> · Separately quoted to scope.</p>
       <Link className={styles.textLink} href="/working-together#options">Website and SEO payment options ↗</Link>
     </Section>
     <Section id="work" title="Selected websites." tone="dark">

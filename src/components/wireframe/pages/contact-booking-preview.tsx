@@ -3,8 +3,6 @@
 import { useState, type FormEvent } from "react";
 import styles from "./contact-wireframe.module.css";
 
-const address = "hello@valinorsystems.co.uk";
-
 export function ContactBookingPreview() {
   const [preview, setPreview] = useState<{ name: string; email: string; website: string; context: string } | null>(null);
 
@@ -43,29 +41,5 @@ export function ContactBookingPreview() {
         </div>}
       </div>
     </details>
-  );
-}
-
-export function ContactEmail() {
-  const [copyStatus, setCopyStatus] = useState("");
-
-  async function copyAddress() {
-    try {
-      await navigator.clipboard.writeText(address);
-      setCopyStatus("Address copied. Paste it into your email service.");
-    } catch {
-      setCopyStatus("Copy wasn’t available. Select the address above and copy it manually.");
-    }
-  }
-
-  return (
-    <div className={styles.emailBlock}>
-      <a className={styles.emailAddress} href={`mailto:${address}`}>{address}</a>
-      <div className={styles.emailActions}>
-        <a className={`${styles.button} ${styles.lightButton}`} href={`mailto:${address}`}>Open email app ↗</a>
-        <button className={`${styles.button} ${styles.outlineButton}`} type="button" onClick={copyAddress}>Copy address</button>
-      </div>
-      <p className={styles.copyStatus} role="status">{copyStatus}</p>
-    </div>
   );
 }

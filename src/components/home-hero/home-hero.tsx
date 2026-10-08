@@ -5,8 +5,6 @@ import { headingFont, bodyFont } from "./fonts";
 import { FluidBackground } from "./fluid-background";
 import { LiquidCallLink } from "./liquid-call-link";
 
-const callHref = "/contact#book";
-
 function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -65,7 +63,7 @@ function Status({ delivered = false }: { delivered?: boolean }) {
 }
 
 /** A static, fictional workflow example. It never fetches private portal data. */
-export function PortalPreview({ standalone = false }: { standalone?: boolean } = {}) {
+export function PortalPreview({ standalone = false, translucent = true }: { standalone?: boolean; translucent?: boolean } = {}) {
   const sidebar: { icon: IconName; label: string }[] = [
     { icon: "home", label: "Dashboard" },
     { icon: "plus", label: "Raise a ticket" },
@@ -75,7 +73,7 @@ export function PortalPreview({ standalone = false }: { standalone?: boolean } =
     { icon: "user", label: "Account" },
   ];
   return (
-    <figure className={`${styles.preview} ${standalone ? styles.standalonePreview : ""} ${headingFont.variable} ${bodyFont.variable}`} aria-label="Illustrative Valinor client portal dashboard">
+    <figure className={`${styles.preview} ${standalone ? styles.standalonePreview : ""} ${translucent ? styles.translucentPreview : ""} ${headingFont.variable} ${bodyFont.variable}`} aria-label="Illustrative Valinor client portal dashboard">
       <figcaption className="sr-only">Demo preview with fictional example-business data. The client portal shows current work, delivered requests and messages from the Valinor team. These are workflow examples, not performance results.</figcaption>
       <div className={styles.portalWindow} aria-hidden="true">
         <div className={styles.windowBar}>
@@ -127,7 +125,7 @@ export function HomeHero({ showPreview = true, sharedBackground = false, viewpor
         <HeroTitle />
         <p>We improve your website, search visibility and the journey from interest to enquiry.</p>
         <div className={styles.ctaReveal}>
-          <LiquidCallLink href={callHref} />
+          <LiquidCallLink />
         </div>
       </div>
       {showPreview && <PortalPreview />}

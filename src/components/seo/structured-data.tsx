@@ -1,3 +1,5 @@
+import { BOOKING_URL } from "@/lib/booking";
+
 const ORIGIN = "https://valinorsystems.co.uk";
 
 /**
@@ -24,7 +26,6 @@ const graph = {
       url: ORIGIN,
       logo: `${ORIGIN}/icons/icon-512.png`,
       image: `${ORIGIN}/icons/icon-512.png`,
-      email: "hello@valinorsystems.co.uk",
       description:
         "Valinor Systems is a UK web design and SEO studio. We build fast, high-converting websites and run the Google Ads that grow them.",
       foundingDate: "2026-07-02",
@@ -45,7 +46,7 @@ const graph = {
       contactPoint: {
         "@type": "ContactPoint",
         contactType: "customer service",
-        email: "hello@valinorsystems.co.uk",
+        url: new URL(BOOKING_URL, ORIGIN).href,
         areaServed: ["GB", "CA"],
         availableLanguage: "English",
       },

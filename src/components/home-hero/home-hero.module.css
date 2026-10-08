@@ -90,6 +90,13 @@
 .requests td { border-top: 1px solid #647f9830; padding: 8px 0; color: #d0dcea; }
 .requests td:first-child { width: 49%; }
 .requests td:last-child { width: 19%; color: #b6c8dc; }
+.translucentPreview .portalWindow { background: #08182c75; border-color: #cbd8e76b; backdrop-filter: blur(18px) saturate(112%); -webkit-backdrop-filter: blur(18px) saturate(112%); box-shadow: 0 24px 65px #02081038, inset 0 1px 0 #ffffff0b; }
+.translucentPreview .windowBar { background: #c6d8eb12; border-bottom-color: #c6d8eb1f; }
+.translucentPreview .sidebar { background: linear-gradient(160deg, #102b4538, #07152255); border-right-color: #c6d8eb17; }
+.translucentPreview .workspace { background: #12304c0d; }
+.translucentPreview .sidebar .active { background: #83afd52b; }
+.translucentPreview .stats > div, .translucentPreview .nextDelivery, .translucentPreview .teamNote, .translucentPreview .requests { background: #8daed00a; border-color: #c6d8eb22; }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .translucentPreview .portalWindow { background: #08182cba; } }
 .skipLink { position: absolute; top: 10px; left: 10px; transform: translateY(-200%); background: #fff; color: #10233a; padding: 12px; border-radius: 4px; z-index: 5; }
 .skipLink:focus { transform: none; }
 @media (max-width: 1250px) {

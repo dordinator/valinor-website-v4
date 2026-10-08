@@ -1,73 +1,134 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
-import { ActionLink, FAQ, Note, PageIntro, Section, WireframePage } from "@/components/wireframe/wireframe";
+import { HomeHeader } from "@/components/home-hero/home-hero";
+import { FluidBackground } from "@/components/home-hero/fluid-background";
+import { bodyFont, headingFont } from "@/components/home-hero/fonts";
+import { LiquidCallLink } from "@/components/home-hero/liquid-call-link";
 import styles from "./pricing.module.css";
 
 export const metadata: Metadata = {
-  title: "Options and pricing",
-  description: "Compare SEO work levels, website options and working arrangements with Valinor Systems.",
+  title: "Packages",
+  description: "Compare SEO, AI search and website improvement packages, website options and working arrangements with Valinor Systems.",
   alternates: { canonical: "/working-together" },
 };
 
 const scopeRows = [
-  ["Content & publishing", "2 substantial items/month proposed", "4 substantial items/month proposed"],
-  ["SEO & AEO", "Priority content, technical fixes and visibility review", "Wider coverage and implementation capacity"],
-  ["Business profiles", "Relevant primary Google Business Profile", "Agreed locations and external profiles"],
-  ["Links & authority", "Targeted outreach", "More frequent outreach and follow-up"],
-  ["Website improvements", "UX, conversion, reviews and routine updates", "Greater capacity and coordination"],
-  ["Reporting & review", "Monthly findings; optional monthly call", "More frequent updates; monthly call"],
-  ["Managed-site care", "Hosting, security, backups and incident handling", "Same baseline care for agreed sites"],
+  { name: "Initial audit & strategy", core: "At kickoff", higher: "At kickoff", included: true },
+  { name: "Blogs, service pages & content updates*", core: "2 / month*", higher: "4 / month*" },
+  { name: "Technical SEO & AI search", core: "Included", higher: "Wider coverage", included: true },
+  { name: "Website & conversion improvements", core: "Included", higher: "Greater capacity", included: true },
+  { name: "Delivery cycles", core: "Monthly", higher: "Weekly / fortnightly" },
+  { name: "Business profiles", core: "Primary Google profile", higher: "Agreed locations & profiles" },
+  { name: "Links & authority", core: "Targeted outreach", higher: "More frequent outreach & follow-up" },
+  { name: "Reporting & strategy call", core: "Monthly", higher: "Monthly + weekly updates" },
+  { name: "Hosting, security & support", core: "Included", higher: "Included", included: true },
+  { name: "Valinor-funded Google Ads", core: "£400 trial total", higher: "£400 / month for 6 months" },
 ] as const;
+
+const practicalDetails = [
+  { id: "first-steps", title: "Do I need a new website?", paragraphs: [
+    "No. We can improve your existing website. We’ll assess what you already have and whether a rebuild would be useful.",
+  ] },
+  { id: "website-build", title: "When is the website build included?", paragraphs: [
+    "Pay your first six months of SEO upfront and we waive the agreed website build fee. With monthly payment, the build is quoted separately—typically around £3,000, depending on scope.",
+  ] },
+  { id: "payments", title: "How long am I committing for?", paragraphs: [
+    "The minimum term is three months from kickoff. After that, the service continues monthly, with 30 days’ written notice to end it.",
+  ] },
+  { id: "scope", title: "How much work will I need to do?", paragraphs: [
+    "We need your business knowledge, access and approvals. We handle the agreed content, design and implementation work.",
+  ] },
+  { id: "ads", title: "What happens after the included Google Ads period?", paragraphs: [
+    "We review the results with you before you decide whether to continue. Paid continuation includes your advertising budget plus management at 15% of spend, with a £100 monthly minimum.",
+  ] },
+  { id: "transfer", title: "Can I take the website with me if I leave?", paragraphs: [
+    "Valinor owns and manages the website during the engagement. Transfer is available under the service agreement; an early buyout fee may apply. Prepaying six months waives the build fee but doesn’t transfer ownership.",
+  ], transferTerms: [
+    "After the three-month initial term, service continues monthly with 30 days’ written notice. On termination and requested transfer before month twelve, the fee is the selected monthly fee × months remaining to the end of month twelve, plus outstanding invoices and pre-approved third-party costs.",
+    "After at least twelve active months, client-specific deliverables transfer on termination without an added transfer fee, subject to one month’s written notice, cleared amounts and agreement compliance. Transfer is not automatic.",
+    "Client-specific files, content, assets, data and functionality transfer where technically practicable; Valinor retains reusable systems and infrastructure. Migration, training, hosting setup and post-handover support are separately agreed and paid for.",
+  ] },
+];
+
+function Check() {
+  return <svg className={styles.check} viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4 10 4 4 8-9" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>;
+}
 
 export default function WorkingTogether() {
   return (
-    <WireframePage>
-      <PageIntro title="Options & pricing">
-        <p>Choose the ongoing work you need, then your website starting point. We can help you decide on a call.</p>
-        <nav className={styles.contents} aria-label="On this pricing page">
-          <Link href="#options">Compare options ↓</Link><Link href="#payments">Payment & terms ↓</Link>
-        </nav>
-      </PageIntro>
+    <div className={`${styles.page} ${headingFont.variable} ${bodyFont.variable}`} data-fluid-page>
+      <FluidBackground fullPage />
+      <HomeHeader overHero />
+      <main className={styles.content}>
+        <section className={styles.hero} aria-labelledby="packages-title">
+          <a className={styles.skipLink} href="#options">Skip to package comparison</a>
+          <div className={styles.heroInner}>
+            <h1 id="packages-title"><span>A clear plan.</span><span>Built around your business.</span></h1>
+            <div className={styles.valueCopy}>
+              <p>Get found in search. Give visitors a clearer reason to choose you.</p>
+              <p>We bring SEO, AI search and website improvements together — helping the right people find your business and take the next step.</p>
+            </div>
+            <div className={styles.heroAction}><LiquidCallLink /><p>We’ll talk through your goals and the work that makes sense for your business.</p></div>
+          </div>
+        </section>
 
-      <Section id="options" title="Choose your work level" className={styles.comparisonScene}>
-        <div className={styles.optionGrid}>
-          <div className={styles.optionSummary}>
-            <div className={styles.planRow}><div><h3>Core</h3><p>Focused SEO and improvements for one business website.</p></div><p className={styles.price}>£995<span>/ month</span></p></div>
-            <div className={styles.planRow}><div><h3>Greater capacity</h3><p>More content, implementation and wider profile coverage. Under development.</p></div><p className={styles.price}>£2,995<span>/ month · proposed</span></p></div>
-            <div className={styles.subsection}><h3>Keep your site or build a new one</h3><p>Either work level can start with either. A new build covers agreed design, copy/content, migration and functions, without a page cap or narrow feature restriction at this stage.</p><Link className={styles.textLink} href="/web-design">Website project detail ↗</Link></div>
-            <div id="first-steps" className={styles.subsection}><h3>Getting started</h3><p>Existing site: access → audit → changes. New site: plan → approve → build/test → launch. Access and decisions affect timing; Ads and outreach follow readiness.</p></div>
+        <section id="options" className={styles.comparisonSection} aria-labelledby="comparison-title">
+          <div className={styles.sectionHeading}>
+            <h2 id="comparison-title">Compare our packages</h2>
+            <p>The same foundations. Different levels of delivery.</p>
+            <p className={styles.sectionNote}>Three-month minimum. Choose the level of support your business needs.</p>
           </div>
-          <div id="scope" className={styles.scope}>
-            <h3>Included work</h3>
-            <div className={styles.comparison}><table>
-              <thead><tr><th scope="col">Work</th><th scope="col">Core · £995</th><th scope="col">Proposed · £2,995</th></tr></thead>
-              <tbody>{scopeRows.map(([name, core, higher]) => <tr key={name}><th scope="row">{name}</th><td><span className={styles.mobileLabel}>Core · £995/month</span>{core}</td><td><span className={styles.mobileLabel}>Proposed · £2,995/month</span>{higher}</td></tr>)}</tbody>
-            </table></div>
+          <p id="table-help" className={styles.mobileHelp}>Swipe or scroll sideways to compare both packages.</p>
+          <div className={styles.tableScroll} role="region" aria-label="Package comparison" aria-describedby="table-help" tabIndex={0} data-lenis-prevent-horizontal>
+            <table className={styles.table}>
+              <caption className="sr-only">Core at £995 per month and proposed Greater capacity at £2,995 per month. Both have a three-month minimum. Content quantities and delivery scope remain to confirm.</caption>
+              <colgroup><col className={styles.featureColumn} /><col /><col /></colgroup>
+              <thead><tr>
+                <th scope="col">What’s included</th>
+                <th scope="col"><span className={styles.planName}>Core</span><span className={styles.planStatus} aria-hidden="true">&nbsp;</span><span className={styles.price}>£995 <span>/ month</span></span></th>
+                <th scope="col"><span className={styles.planName}>Greater capacity</span><span className={styles.planStatus}>Proposed</span><span className={styles.price}>£2,995 <span>/ month</span></span></th>
+              </tr></thead>
+              <tbody>{scopeRows.map(row => <tr key={row.name}>
+                <th scope="row">{row.name}</th>
+                <td><span className={styles.cellValue}>{"included" in row && row.included && <Check />}{row.core}</span></td>
+                <td><span className={styles.cellValue}>{"included" in row && row.included && <Check />}{row.higher}</span></td>
+              </tr>)}</tbody>
+              <tfoot><tr><th scope="row"><span className="sr-only">Discuss a package</span></th><td><LiquidCallLink /></td><td><LiquidCallLink /></td></tr></tfoot>
+            </table>
           </div>
-        </div>
-      </Section>
+          <div className={styles.tableNotes}>
+            <p>*Illustrative content quantities — to confirm. Higher tier is proposed.</p>
+            <p>Website build fee waived with six months of SEO paid upfront. <Link href="#transfer">Managed ownership terms apply.</Link></p>
+          </div>
+        </section>
 
-      <Section id="payments" title="Payment & practical terms" tone="dark" className={styles.termsScene}>
-        <div className={styles.termsGrid}>
-          <div>
-            <h3>Monthly payment</h3><p>Three-month minimum from kickoff, including build time. Fees paid in advance. Separate website guide: around £3,000 to scope, 50% at kickoff and 50% on completion.</p>
-            <h3>Six months upfront · build included</h3><p>Optional prepayment: £5,970 at Core or £17,970 at the proposed higher level. Pay before kickoff to waive the full agreed build fee; the period runs from kickoff.</p>
-          </div>
-          <div id="ads" className={styles.anchor}>
-            <h3>Introductory Google Ads</h3><p>Core: £400 total funded trial with management/review. Proposed higher level: £400/month for six months from campaign launch, with management/reporting.</p><p>Continue only by agreement: separate client-funded media plus management at 15% of spend, minimum £100/month. Any Google credit depends on eligibility, qualifying spend and redemption terms/deadlines.</p>
-          </div>
-        </div>
-        <div id="ownership" className={styles.ownership}><h3>Managed website ownership</h3><p>Valinor retains ownership; your business is licensed to use the site. Six-month prepayment does not transfer ownership.</p></div>
-        <div className={styles.disclosures}><FAQ items={[
-          { question: "Leaving the service and transferring the website", answer: "After the three-month initial term, service continues monthly with 30 days’ written notice. On termination and requested transfer before month twelve, the fee is the selected monthly fee × months remaining to the end of month twelve, plus outstanding invoices and pre-approved third-party costs. After at least twelve active months, client-specific deliverables transfer on termination without an added transfer fee, subject to one month’s written notice, cleared amounts and agreement compliance. Transfer is not automatic. Client-specific files, content, assets, data and functionality transfer where technically practicable; Valinor retains reusable systems and infrastructure. Migration, training, hosting setup and post-handover support are separately agreed and paid for." },
-          { question: "Scope details to confirm before engagement", answer: <Note>Higher-tier availability, content quantities, turnaround, VAT, support cover/SLA and Ads assessment criteria remain to confirm. Rankings, leads and AI citations are not guaranteed.</Note> },
-        ]} /></div>
-      </Section>
+        <section id="faqs" className={styles.websiteSection} aria-labelledby="faq-title">
+          <h2 id="faq-title">Frequently asked questions</h2>
+          <div className={styles.details}>{practicalDetails.map(detail => <details key={detail.id} id={detail.id}>
+            <summary>{detail.title}<span className={styles.plus} aria-hidden="true" /></summary>
+            <div className={styles.detailCopy}>
+              {detail.paragraphs.map(paragraph => <p key={paragraph}>{paragraph}</p>)}
+              {detail.transferTerms && <details className={styles.transferTerms}>
+                <summary>Full website transfer terms<span className={styles.plus} aria-hidden="true" /></summary>
+                <div className={styles.detailCopy}>{detail.transferTerms.map(paragraph => <p key={paragraph}>{paragraph}</p>)}</div>
+              </details>}
+            </div>
+          </details>)}</div>
+        </section>
 
-      <Section title="Let’s discuss what you need">
-        <p>Standalone web design, paid Ads and charity Grants are also available with separately agreed scope and fees. You do not need to choose a tier first.</p>
-        <ActionLink>Book a call ↗</ActionLink>
-      </Section>
-    </WireframePage>
+        <section className={styles.closing} aria-labelledby="closing-title">
+          <h2 id="closing-title">Let’s talk about<br />your business.</h2>
+          <p>You don’t need to choose a package first.<br />We’ll work out the right next step together.</p>
+          <LiquidCallLink />
+          <p className={styles.standalone}>Standalone web design, paid Ads and charity Grants are also available with separately agreed scope and fees.</p>
+        </section>
+      </main>
+      <footer className={styles.footer}>
+        <Link href="/" className={styles.footerBrand}><Image src="/assets/brand/valinor-mark-transparent.png" alt="" width={38} height={34} /><span>VALINOR SYSTEMS</span></Link>
+        <nav aria-label="Footer"><Link href="/#services">Services</Link><Link href="/working-together">Packages</Link><Link href="/login">Client portal</Link><Link href="/privacy">Privacy &amp; cookies</Link></nav>
+        <span className={styles.copyright}>© 2026 Valinor Systems</span>
+      </footer>
+    </div>
   );
 }

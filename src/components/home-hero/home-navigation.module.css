@@ -14,7 +14,6 @@
 .brand img { width: 42px; height: 38px; object-fit: contain; }
 .brand span { font-family: var(--font-home-heading), Arial, sans-serif; font-weight: 500; font-size: 17px; letter-spacing: .055em; }
 .brand strong { display: block; font-weight: inherit; }
-.brand .reviewLabel { display: block; font-family: var(--font-home-body), Arial, sans-serif; font-size: 10px; line-height: 1.4; letter-spacing: .01em; color: #879cb4; font-weight: 400; margin-top: 2px; }
 .desktopNav { position: relative; display: flex; align-items: center; gap: 4px; margin-left: auto; }
 .navLink { display: flex; align-items: center; justify-content: center; gap: 4px; min-height: 34px; padding: 8px 13px; border: 0; border-radius: 20px; background: transparent; color: #c2d0e1; font: 400 14px/1.2 var(--font-home-body), Arial, sans-serif; cursor: pointer; white-space: nowrap; transition: color 160ms ease, background 160ms ease; }
 .navLink:hover, .navLink[aria-expanded="true"] { color: #fff; background: #ffffff0b; }
@@ -49,7 +48,9 @@
   .desktopNav { display: none; }
   .actions { margin-left: auto; gap: 16px; }
   .portal { border: 0; padding-left: 0; }
-  .mobileTrigger { display: flex; flex-direction: column; justify-content: center; gap: 5px; width: 34px; height: 34px; padding: 7px; border: 0; background: transparent; color: #f5f8fb; cursor: pointer; }
+  .mobileTrigger { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; width: 44px; height: 44px; padding: 7px; border: 0; background: transparent; color: #f5f8fb; cursor: pointer; }
+  .brand { min-width: 44px; min-height: 44px; justify-content: center; }
+  .portal { display: inline-flex; align-items: center; min-height: 44px; }
   .mobileTrigger span { width: 17px; height: 1px; background: currentColor; transition: transform 180ms ease; }
   .mobileTrigger[aria-expanded="true"] span:first-child { transform: translateY(3px) rotate(45deg); }
   .mobileTrigger[aria-expanded="true"] span:last-child { transform: translateY(-3px) rotate(-45deg); }
@@ -58,9 +59,9 @@
   .header[data-mobile-open] .bar { width: 100%; height: 64px; padding: 0 20px; }
   .mobilePanel:not([hidden]) { display: grid; gap: 35px; max-height: calc(100dvh - 96px); overflow-y: auto; overscroll-behavior: contain; padding: 30px 32px 60px; border-top: 1px solid #adc0d015; align-content: start; animation: menuEnter 180ms ease-out both; }
   .groupLabel { display: block; font-size: 13px; color: #899db4; margin-bottom: 16px; }
-  .mobilePanel a { display: block; width: fit-content; font-size: 23px; line-height: 1.4; color: #edf3fa; margin-bottom: 13px; }
+  .mobilePanel a { display: flex; align-items: center; width: fit-content; min-height: 44px; font-size: 23px; line-height: 1.4; color: #edf3fa; margin-bottom: 8px; }
 }
-@media (max-width: 600px) { .spacer { height: 80px; } .transparentSpacer { height: 64px; } .header { --nav-inset: 4px; top: 8px; width: calc(100% - 24px); } .bar { height: 60px; gap: 10px; padding: 0 12px; } .header[data-mobile-open] .bar { height: 60px; padding: 0 12px; } .brand { gap: 8px; } .brand img { width: 34px; height: 31px; } .brand > span { display: none; } .actions { gap: 6px; } .portal { font-size: 12px; } .portalDesktop { display: none; } .portalMobile { display: inline; } .call { font-size: 12px; gap: 8px; padding: 10px 12px; min-height: 42px; } .call svg { width: 14px; height: 14px; } .mobileTrigger { width: 28px; padding: 5px; } .mobilePanel:not([hidden]) { max-height: calc(100dvh - 88px); padding: 24px 24px 32px; } }
+@media (max-width: 600px) { .spacer { height: 80px; } .transparentSpacer { height: 64px; } .header { --nav-inset: 4px; top: 8px; width: calc(100% - 24px); } .bar { height: 60px; gap: 10px; padding: 0 12px; } .header[data-mobile-open] .bar { height: 60px; padding: 0 12px; } .brand { gap: 8px; } .brand img { width: 34px; height: 31px; } .brand > span { display: none; } .actions { gap: 6px; } .portal { font-size: 12px; } .portalDesktop { display: none; } .portalMobile { display: inline; } .call { font-size: 12px; gap: 8px; padding: 10px 12px; min-height: 44px; } .call svg { width: 14px; height: 14px; } .mobileTrigger { width: 44px; padding: 5px; } .mobilePanel:not([hidden]) { max-height: calc(100dvh - 88px); padding: 24px 24px 32px; } }
 @media (max-width: 380px) { .bar, .header[data-mobile-open] .bar { padding-inline: 10px; } .portal { font-size: 11px; } }
-@media (max-width: 350px) { .brand img { width: 30px; height: 28px; } .brand span { font-size: 11px; } .call { padding-inline: 10px; } .actions { gap: 5px; } }
+@media (max-width: 350px) { .bar, .header[data-mobile-open] .bar { padding-inline: 8px; gap: 4px; } .brand img { width: 30px; height: 28px; } .brand span { font-size: 11px; } .call { padding-inline: 8px; } .actions { gap: 4px; } }
 @media (prefers-reduced-motion: reduce) { .dropdown, .mobilePanel:not([hidden]) { animation: none; } .header::before, .brand, .desktopNav, .actions, .navLink, .header .chevron, .mobileTrigger span, .call { transition: none; } }

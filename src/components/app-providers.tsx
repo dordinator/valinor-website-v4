@@ -1,6 +1,7 @@
 "use client";
 
 import Snap from "lenis/snap";
+import type { VirtualScrollData } from "lenis";
 import { ReactLenis, useLenis } from "lenis/react";
 import { MotionConfig } from "motion/react";
 import { useEffect, type ReactNode } from "react";
@@ -9,6 +10,19 @@ import { usePathname } from "next/navigation";
 type AppProvidersProps = {
   children: ReactNode;
 };
+
+function paceWorkScroll(data: VirtualScrollData) {
+  if (data.event.type !== "wheel" || data.event.ctrlKey || data.event.shiftKey ||
+    window.innerWidth <= 800 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return true;
+  const work = document.querySelector<HTMLElement>("[data-work-reading]");
+  if (!work) return true;
+  const bounds = work.getBoundingClientRect();
+  const readingLine = window.innerHeight * .5;
+  // Reduce distance per wheel/trackpad gesture only while reading the work.
+  // Touch, keyboard, zoom and other sections keep their normal behaviour.
+  if (bounds.top <= readingLine && bounds.bottom >= readingLine) data.deltaY *= .6;
+  return true;
+}
 
 function SoftSectionSnap() {
   const lenis = useLenis();
@@ -55,9 +69,15 @@ function SoftSectionSnap() {
 }
 
 export function AppProviders({ children }: AppProvidersProps) {
+  const pathname = usePathname();
+  // The review playground owns its adjustable scroller; regular pages keep
+  // their existing scroll settings and section snapping.
+  if (pathname === "/scroll-lab") {
+    return <MotionConfig reducedMotion="user">{children}</MotionConfig>;
+  }
   return (
     <MotionConfig reducedMotion="user">
-      <ReactLenis root options={{ anchors: true, autoRaf: true }}>
+      <ReactLenis root options={{ anchors: true, autoRaf: true, lerp: .08, virtualScroll: paceWorkScroll }}>
         <SoftSectionSnap />
         {children}
       </ReactLenis>

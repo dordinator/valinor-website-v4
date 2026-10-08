@@ -1,5 +1,6 @@
 .stage { --preview-progress: 0; position: relative; z-index: 1; min-height: 100svh; margin-top: -28svh; padding-bottom: 10svh; display: flex; align-items: flex-start; justify-content: center; pointer-events: none; font-family: var(--font-home-body), Arial, sans-serif; }
+.stage::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(180deg, #090a0c00 0%, #090a0c12 12%, #090a0c70 36%, #090a0ccc 67%, #090a0c 100%); }
 .frame { width: min(calc(min(76vw, 1280px) + 10vw * var(--preview-progress)), calc(100vw - 32px)); height: calc(60svh + 10svh * var(--preview-progress)); min-height: 300px; pointer-events: auto; }
-@media (max-width: 600px) { .frame { width: min(calc(86vw + 10vw * var(--preview-progress)), calc(100vw - 24px)); min-height: 340px; } }
+@media (max-width: 600px) { .stage { margin-top: -12svh; } .frame { width: min(calc(86vw + 10vw * var(--preview-progress)), calc(100vw - 24px)); min-height: 340px; } }
 @media (max-height: 620px) { .stage { margin-top: -12svh; } .frame { min-height: 280px; } }
 @media (prefers-reduced-motion: reduce) { .stage { --preview-progress: 0 !important; } }

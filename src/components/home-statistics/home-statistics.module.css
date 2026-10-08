@@ -1,0 +1,32 @@
+.section { position: relative; z-index: 1; background: #090a0c; color: #edf2f5; font-family: var(--font-home-body), Arial, sans-serif; padding: clamp(52px, 8svh, 94px) 0 clamp(74px, 12svh, 130px); scroll-margin-top: 82px; }
+.inner { width: min(1280px, calc(100% - 96px)); margin: auto; }
+.section h2 { margin: 0 auto clamp(66px, 9svh, 100px); max-width: 1000px; text-align: center; font-size: clamp(32px, 3.4vw, 48px); font-weight: 500; line-height: 1.2; letter-spacing: -.035em; text-wrap: balance; }
+.findings { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; }
+.finding { display: flex; flex-direction: column; align-items: center; min-width: 0; text-align: center; padding: 0 clamp(20px, 2.4vw, 36px); }
+.finding + .finding { border-left: 1px solid #c5d0db40; }
+.value { margin: 0 0 20px; font-size: clamp(56px, 6.3vw, 92px); font-weight: 600; line-height: 1.05; letter-spacing: -.055em; white-space: nowrap; font-variant-numeric: lining-nums tabular-nums; }
+.ai .value { font-size: clamp(42px, 4.8vw, 70px); line-height: 1.38; letter-spacing: -.065em; }
+.caption { max-width: 300px; min-height: 3em; margin: 0; color: #b9c0ca; font-size: clamp(17px, 1.5vw, 21px); font-weight: 500; line-height: 1.5; text-wrap: balance; }
+.source { margin-top: 17px; max-width: 320px; font-size: 12px; line-height: 1.55; color: #929faa; }
+.source summary { width: fit-content; margin: auto; cursor: pointer; text-decoration: underline; text-decoration-color: #c5d0db36; text-underline-offset: 4px; }
+.source summary:hover, .source a:hover { color: #e7edf2; }
+.source :is(summary,a):focus-visible { outline: 2px solid #d4b774; outline-offset: 5px; border-radius: 2px; }
+.context { margin-top: 20px; text-align: left; }
+.context h3 { font-size: 14px; font-weight: 500; color: #edf2f5; margin: 0 0 10px; }
+.context p { margin: 0 0 14px; font-size: 13px; line-height: 1.6; color: #b4bec7; }
+.context a { text-decoration: underline; text-underline-offset: 3px; }
+.context > span { display: block; margin-top: 7px; font-size: 11px; }
+@media (max-width: 1050px) { .inner { width: calc(100% - 64px); } .finding { padding-inline: 18px; } .value { font-size: 66px; } .caption { font-size: 17px; } }
+@media (max-width: 760px) {
+  .section { padding: 52px 0 72px; scroll-margin-top: 74px; }
+  .inner { width: calc(100% - 40px); }
+  .section h2 { font-size: clamp(30px, 7vw, 38px); margin-bottom: 48px; }
+  .findings { grid-template-columns: 1fr; gap: 32px; }
+  .finding { padding: 0 0 32px; }
+  .finding + .finding { border-left: 0; border-top: 1px solid #c5d0db30; padding-top: 32px; }
+  .finding:last-child { padding-bottom: 0; }
+  .value, .ai .value { font-size: clamp(48px, 13vw, 70px); line-height: 1.05; margin-bottom: 16px; }
+  .caption { min-height: 0; max-width: 300px; font-size: 19px; }
+  .source { margin-top: 14px; }
+  .source summary { display: flex; align-items: center; justify-content: center; min-height: 44px; padding: 8px 12px; }
+}

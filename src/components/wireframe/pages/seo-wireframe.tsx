@@ -4,7 +4,7 @@ import styles from "./seo-wireframe.module.css";
 
 export default function SeoWireframe() {
   return <WireframePage>
-    <PageIntro title="Useful content. Better search visibility." price={<><strong>£995/month</strong> · Three-month minimum from kickoff. Paid in advance.</>}>
+    <PageIntro title="Useful content. Better search visibility.">
       <p>SEO, AEO and website improvements that help suitable customers find and understand your business.</p>
     </PageIntro>
     <Section id="the-work" title="What we work on.">
@@ -13,6 +13,7 @@ export default function SeoWireframe() {
         <div><h3>Technical foundations</h3><p>Indexing, speed, mobile use and on-page improvements.</p></div>
         <div><h3>Recognition and conversion</h3><p>Relevant outreach, business profiles and clearer enquiry routes.</p></div>
       </div>
+      <p className={styles.small}><strong>£995/month</strong> · Three-month minimum from kickoff. Paid in advance.</p>
       <p className={styles.small}>Monthly work and reporting follow an agreed plan. <Link href="/working-together#scope">View scope and capacity ↗</Link></p>
       <details id="site-access" className={styles.details}><summary>Working on your existing website</summary><p>We arrange authorised access or cooperate with your website manager. A new website is a separate decision. <Link href="/web-design">Explore Web Design ↗</Link></p></details>
     </Section>

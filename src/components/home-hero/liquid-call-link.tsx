@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion, useReducedMotion, useSpring, useTransform } from "motion/react";
 import { useEffect, useId, type PointerEvent } from "react";
+import { BOOKING_URL } from "@/lib/booking";
 import styles from "./liquid-call-link.module.css";
 
 function Label({ label }: { label: string }) {
@@ -10,7 +11,7 @@ function Label({ label }: { label: string }) {
 }
 
 /** A local goo mask merges the fill. Both text layers share that exact mask. */
-export function LiquidCallLink({ href = "/contact#book", label = "Book a call" }: { href?: string; label?: string }) {
+export function LiquidCallLink({ href = BOOKING_URL, label = "Book a call" }: { href?: string; label?: string }) {
   const id = useId().replace(/[^a-zA-Z0-9_-]/g, "");
   const reduced = useReducedMotion();
   const x = useSpring(140, { stiffness: 120, damping: 21, mass: .8 });
