@@ -13,7 +13,7 @@ export type ServiceCategory = {
   id: string; label: string; note: string;
   items: readonly { title: string; deliverables: readonly string[] }[];
 };
-export type ServiceStoryChapter = { id: string; statement: string; title: string; description: string; visual: ReactNode };
+export type ServiceStoryChapter = { id: string; statement: string; statementBreakAfter?: number; title: string; description: string; visual: ReactNode };
 export type ServiceFaqItem = { id: string; question: string; answer: ReactNode };
 const ease = [.4, 0, .2, 1] as const;
 const wordSpring = { stiffness: 130, damping: 30, mass: .35 };
@@ -56,8 +56,8 @@ function StoryStatement({ chapter, row, active, reduced }: { chapter: ServiceSto
   const { scrollYProgress } = useScroll({ target: row, offset: ["start .8", "end .8"] });
   const progress = useSpring(scrollYProgress, wordSpring);
   const words = chapter.statement.split(" ");
-  return <motion.p className={styles.statement} aria-hidden="true" initial={false} animate={{ opacity: active ? 1 : 0 }} transition={{ duration: reduced ? 0 : .18 }}>
-    {words.map((word, index) => <Fragment key={`${word}-${index}`}><StoryWord word={word} index={index} total={words.length} progress={progress} reduced={reduced} />{index < words.length - 1 ? " " : null}</Fragment>)}
+  return <motion.p className={styles.statement} data-statement-break={chapter.statementBreakAfter || undefined} aria-hidden="true" initial={false} animate={{ opacity: active ? 1 : 0 }} transition={{ duration: reduced ? 0 : .18 }}>
+    {words.map((word, index) => <Fragment key={`${word}-${index}`}><StoryWord word={word} index={index} total={words.length} progress={progress} reduced={reduced} />{index + 1 === chapter.statementBreakAfter ? <br /> : index < words.length - 1 ? " " : null}</Fragment>)}
   </motion.p>;
 }
 
@@ -71,9 +71,9 @@ function StoryChapter({ chapter, row, index, reduced }: { chapter: ServiceStoryC
   const words = chapter.statement.split(" ");
 
   return <li ref={row} className={styles.chapter} data-service-chapter-index={index}>
-    <p className={styles.mobileStatement}>
+    <p className={styles.mobileStatement} data-statement-break={chapter.statementBreakAfter || undefined}>
       <span className="sr-only">{chapter.statement}</span>
-      <span aria-hidden="true">{words.map((word, wordIndex) => <Fragment key={`${word}-${wordIndex}`}><StoryWord word={word} index={wordIndex} total={words.length} progress={progress} reduced={reduced} />{wordIndex < words.length - 1 ? " " : null}</Fragment>)}</span>
+      <span aria-hidden="true">{words.map((word, wordIndex) => <Fragment key={`${word}-${wordIndex}`}><StoryWord word={word} index={wordIndex} total={words.length} progress={progress} reduced={reduced} />{wordIndex + 1 === chapter.statementBreakAfter ? <br /> : wordIndex < words.length - 1 ? " " : null}</Fragment>)}</span>
     </p>
     <figure className={styles.chapterFigure}>
       <motion.div className={styles.storyVisual} style={{ y: reduced ? 0 : y, opacity: reduced ? 1 : opacity }}><StoryMotion.Provider value={{ progress, reduced }}>{chapter.visual}</StoryMotion.Provider></motion.div>

@@ -1,0 +1,107 @@
+.scene { display: grid; grid-template-columns: minmax(0, 3.05fr) minmax(170px, 1fr); gap: clamp(24px, 2.5vw, 42px); align-items: center; scroll-margin-top: 120px; }
+.pair { position: relative; display: grid; grid-template-columns: minmax(0, 1.26fr) minmax(0, 1fr); gap: clamp(28px, 2.6vw, 44px); align-items: start; }
+.websiteColumn, .enquiryColumn { min-width: 0; }
+.enquiryColumn { padding-top: 96px; }
+.exampleLabel { margin: 0 0 16px; color: #a4afb8; font-size: 11px; line-height: 1.5; }
+.website { overflow: hidden; border: 1px solid #d4dce3; border-radius: 8px; background: #f6f7f8; color: #152b43; }
+.websiteNav { display: flex; align-items: center; gap: 8px; padding: 17px 19px; }
+.websiteNav svg { width: 27px; height: 27px; flex: 0 0 27px; color: #47766b; }
+.websiteNav strong { font-size: 11px; line-height: 1.4; font-weight: 500; }
+.websiteNav > span { margin-left: auto; font-size: 16px; }
+.kitchenImage { display: block; width: 100%; height: auto; aspect-ratio: 2.15; object-fit: cover; object-position: 50% 57%; }
+.websiteBody { padding: 22px 20px 20px; }
+.websiteBody h3 { margin: 0; font-size: clamp(21px, 1.6vw, 26px); line-height: 1.2; letter-spacing: -.035em; font-weight: 500; }
+.intro { margin: 11px 0 20px; color: #4f6278; font-size: 12px; line-height: 1.6; }
+.detail { display: flex; align-items: flex-start; gap: 13px; padding: 16px 12px; background: #f2e6c344; border-radius: 4px; }
+.detail + .detail { margin-top: 8px; }
+.detail svg { width: 23px; height: 23px; flex: 0 0 23px; color: #88651f; margin-top: 2px; }
+.detail strong { font-size: 12px; font-weight: 500; line-height: 1.5; }
+.detail p { margin: 5px 0 0; font-size: 12px; line-height: 1.55; color: #4f6278; }
+.availableRole { margin-top: 20px; padding: 12px 13px 4px; border: 1px solid #91a2b1; border-radius: 4px; }
+.availableRole label { display: block; font-size: 11px; color: #4f6278; line-height: 1.5; }
+.lightSelect, .darkSelect { position: relative; }
+.lightSelect select, .darkSelect select { appearance: none; width: 100%; min-height: 44px; border-radius: 4px; font: inherit; font-size: 12px; cursor: pointer; }
+.lightSelect select { border: 0; padding: 9px 27px 9px 0; color: #152b43; background: transparent; font-weight: 500; }
+.lightSelect svg, .darkSelect svg { position: absolute; right: 2px; top: 14px; width: 16px; height: 16px; pointer-events: none; }
+.askButton, .sendButton { display: flex; align-items: center; justify-content: center; gap: 17px; width: 100%; min-height: 48px; margin-top: 15px; padding: 13px 12px; border-radius: 4px; font: inherit; font-size: 12px; line-height: 1.5; cursor: pointer; }
+.askButton { border: 1px solid #152b43; background: #152b43; color: #edf2f5; }
+.askButton:hover { background: #234159; }
+.enquiry { padding: 24px 20px; border: 1px solid #6d84976b; border-radius: 8px; color: #edf2f5; background: #10171d; color-scheme: dark; scroll-margin-block: 120px 24px; }
+.enquiry h3 { margin: 0 0 25px; font-size: clamp(21px, 1.7vw, 27px); font-weight: 500; line-height: 1.25; letter-spacing: -.03em; }
+.enquiry > label { display: block; margin: 22px 0 9px; font-size: 12px; line-height: 1.5; }
+.darkSelect select, .enquiry textarea { border: 1px solid #6d84976b; background: #1b2832; color: #edf2f5; padding: 12px 30px 12px 12px; }
+.darkSelect svg { right: 12px; top: 16px; }
+.enquiry textarea { display: block; width: 100%; min-height: 90px; max-height: 220px; resize: vertical; border-radius: 4px; padding: 12px; font: inherit; font-size: 12px; line-height: 1.6; }
+.scene :is(select, textarea):focus-visible { outline: 2px solid #d8bb7d; outline-offset: 4px; }
+.sendButton { margin-top: 22px; background: #f6f7f8; border: 1px solid #d4dce3; color: #152b43; }
+.sendButton:hover { background: #e6ebef; }
+.note { margin: 13px 0 0; color: #a4afb8; font-size: 10px; line-height: 1.6; }
+.status { margin: 19px 0 0; padding-top: 16px; border-top: 1px solid #6d84976b; color: #b6c6db; font-size: 12px; line-height: 1.6; }
+.connection { position: absolute; inset: 0; width: 100%; height: 100%; color: #d8bb7d; overflow: visible; pointer-events: none; }
+.explanation { min-width: 0; }
+.explanationTitle { margin: 0 0 24px; font-size: 14px; line-height: 1.5; color: #a4afb8; }
+.explanation > p:last-child { margin: 0; font-size: clamp(18px, 1.55vw, 25px); line-height: 1.5; letter-spacing: -.025em; color: #edf2f5; }
+@media (max-width: 1300px) and (min-width: 1101px) {
+  .scene { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .explanation { max-width: 440px; justify-self: end; }
+  .explanationTitle { margin-bottom: 12px; }
+  .pair { max-width: 780px; }
+}
+@media (max-width: 1100px) {
+  .scene { grid-template-columns: minmax(0, 1fr); }
+  .pair { max-width: 780px; width: 100%; margin: auto; gap: 40px; }
+  .explanation { width: min(100%, 500px); justify-self: end; }
+  .explanationTitle { margin-bottom: 12px; }
+}
+@media (max-width: 700px) {
+  .pair { grid-template-columns: minmax(0, 1fr); gap: 30px; }
+  .enquiryColumn { padding-top: 0; }
+  .connection { display: none; }
+  .website { max-width: 450px; }
+  .enquiryColumn { max-width: 450px; width: 100%; justify-self: end; }
+  .websiteNav { padding: 18px 22px; }
+  .websiteNav strong { font-size: 12px; }
+  .websiteBody { padding: 26px 23px 23px; }
+  .websiteBody h3, .enquiry h3 { font-size: 26px; }
+  .intro, .detail strong, .detail p, .enquiry > label, .lightSelect select, .darkSelect select, .enquiry textarea, .askButton, .sendButton { font-size: 14px; }
+  .enquiry { padding: 27px 23px; }
+  .explanation { width: 100%; justify-self: start; }
+  .explanation > p:last-child { font-size: 20px; }
+  .note { font-size: 11px; }
+}
+
+/* Wider desktop cutouts, with related information sharing a row. */
+@media (min-width: 701px) {
+  .scene { grid-template-columns: minmax(0, 3.6fr) minmax(170px, 1fr); gap: 24px; }
+  .pair { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 26px; }
+  .enquiryColumn { padding-top: 68px; }
+  .websiteNav { padding: 12px 17px; }
+  .kitchenImage { aspect-ratio: 3.25; }
+  .websiteBody { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; padding: 18px; }
+  .websiteBody h3, .intro { grid-column: 1 / -1; }
+  .intro { margin: 0 0 6px; }
+  .detail { display: block; padding: 12px; }
+  .detail + .detail { margin-top: 0; }
+  .detail svg { width: 19px; height: 19px; margin: 0 0 7px; }
+  .detail strong { display: block; }
+  .detail p { margin-top: 4px; }
+  .availableRole { grid-column: 1 / -1; display: flex; align-items: center; gap: 15px; margin-top: 4px; padding: 0 12px; }
+  .availableRole label { flex-shrink: 0; }
+  .lightSelect { flex: 1; min-width: 0; }
+  .askButton { grid-column: 1 / -1; margin-top: 0; min-height: 44px; padding-block: 10px; }
+  .enquiry { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 12px; padding: 21px 20px; grid-template-areas: "heading heading" "role-label availability-label" "role availability" "question-label question-label" "question question" "send send" "status status"; }
+  .enquiry h3 { grid-area: heading; margin-bottom: 10px; }
+  .enquiry > label { margin: 0; }
+  .enquiry > label:nth-of-type(1) { grid-area: role-label; }
+  .enquiry > label:nth-of-type(2) { grid-area: availability-label; }
+  .enquiry > label:nth-of-type(3) { grid-area: question-label; margin-top: 7px; }
+  .enquiry > .darkSelect:nth-of-type(1) { grid-area: role; }
+  .enquiry > .darkSelect:nth-of-type(2) { grid-area: availability; }
+  .enquiry textarea { grid-area: question; min-height: 72px; }
+  .sendButton { grid-area: send; min-height: 44px; margin-top: 7px; padding-block: 10px; }
+  .enquiry > [role="status"] { grid-area: status; }
+  .enquiry > [role="status"]:empty { display: none; }
+}
+@media (min-width: 701px) and (max-width: 1300px) {
+  .scene { grid-template-columns: minmax(0, 1fr); }
+}
