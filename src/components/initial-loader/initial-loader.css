@@ -1,0 +1,72 @@
+#site-content { display: contents; }
+[data-valinor-loader] { display: none; }
+
+html[data-initial-loading]:not([data-initial-loading="leaving"]) { overflow: hidden; }
+html[data-initial-loading]:not([data-initial-loading="leaving"]) #site-content { visibility: hidden; }
+html[data-initial-loading]:not([data-initial-loading="leaving"]) #site-content * { visibility: hidden !important; }
+
+html[data-initial-loading] [data-valinor-loader] {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  display: grid;
+  place-items: center;
+  background: #000;
+  touch-action: none;
+  overscroll-behavior: none;
+  opacity: 1;
+  transition: opacity 160ms cubic-bezier(.23, 1, .32, 1);
+}
+html[data-initial-loading="leaving"] [data-valinor-loader] {
+  opacity: 0;
+  pointer-events: none;
+}
+.initial-loader-lockup {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 2vw, 28px);
+  max-width: calc(100vw - 40px);
+}
+.initial-loader-cube {
+  position: relative;
+  flex: none;
+  width: clamp(128px, 15vw, 192px);
+  aspect-ratio: 1;
+}
+.initial-loader-cube canvas,
+.initial-loader-cube img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+[data-valinor-loader][data-live="true"] img { visibility: hidden; }
+.initial-loader-wordmark {
+  position: relative;
+  color: #494c53;
+  font-family: var(--font-home-heading), Arial, sans-serif;
+  font-size: clamp(27px, 3.3vw, 44px);
+  font-weight: 500;
+  line-height: 1.17;
+  letter-spacing: .035em;
+  text-transform: uppercase;
+}
+.initial-loader-ink {
+  position: absolute;
+  inset: 0;
+  color: #edf5f2;
+  clip-path: inset(0 calc((1 - var(--initial-loader-progress, 0)) * 100%) 0 0);
+  /* Actual frame progress drives the mask; no trailing fill after completion. */
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .initial-loader-cube canvas { visibility: hidden; }
+  [data-valinor-loader][data-live="true"] img { visibility: visible; }
+  .initial-loader-ink, html[data-initial-loading] [data-valinor-loader] { transition: none; }
+}
+@media (max-width: 359px) {
+  .initial-loader-cube { width: 104px; }
+  .initial-loader-wordmark { font-size: 24px; }
+}

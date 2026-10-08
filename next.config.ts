@@ -22,6 +22,10 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
+      {
+        source: "/loader-live/:version([a-f0-9]{12})/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+      },
       ...["/learn/:path*", "/references/:path*"].map((source) => ({
         source,
         headers: [{ key: "X-Robots-Tag", value: "noindex" }],

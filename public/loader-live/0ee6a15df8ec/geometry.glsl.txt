@@ -1,0 +1,58 @@
+#version 300 es
+precision highp float;
+layout(location=0) in vec3 position;
+layout(location=1) in vec3 normal;
+layout(location=2) in vec2 uv;
+layout(location=3) in float faceIndex;
+layout(location=4) in vec4 cell;
+layout(location=5) in vec3 motion;
+uniform mat3 uRoot;
+uniform vec2 uShift;
+uniform vec4 uQuarter;
+uniform mat4 projectionMatrix;
+out vec3 vViewPosition;
+out vec3 vNormal;
+out vec2 vArtworkUv;
+flat out float vSymbol;
+
+vec3 spin(vec3 p,float s,float c,bool x){
+ return x?vec3(p.x,c*p.y-s*p.z,s*p.y+c*p.z):vec3(c*p.x+s*p.z,p.y,-s*p.x+c*p.z);
+}
+void roundExterior(inout vec3 p,inout vec3 n,vec3 center){
+ vec3 q=clamp(p,vec3(-.43),vec3(.43));
+ vec3 d=p-q;
+ float len=length(d);
+ vec3 exterior=abs(center+n/6.);
+ if(len>.07)p=q+d*(.07/len);
+ if(max(exterior.x,max(exterior.y,exterior.z))>.499&&len>0.)n=d/len;
+}
+void main(){
+ vec3 center=cell.xyz/3.;
+ bool x=abs(cell.w)>1.5;
+ float direction=sign(cell.w);
+ float s0=uQuarter.x*direction,c0=uQuarter.y,s1=uQuarter.z*direction,c1=uQuarter.w;
+ vec3 p0=spin(position,s0,c0,x)+center,n0=spin(normal,s0,c0,x);
+ vec3 p1=spin(position,s1,c1,x)+center,n1=spin(normal,s1,c1,x);
+ roundExterior(p0,n0,center);roundExterior(p1,n1,center);
+ p0=spin(p0-center,-s0,c0,x);n0=spin(n0,-s0,c0,x);
+ p1=spin(p1-center,-s1,c1,x);n1=spin(n1,-s1,c1,x);
+ vec3 p=spin(mix(p0,p1,motion.z),motion.x,motion.y,x)+center;
+ vec3 n=spin(normalize(mix(n0,n1,motion.z)),motion.x,motion.y,x);
+ p.z-=2./15.;
+ vec3 world=uRoot*(p*1.7)+vec3(uShift,0.);
+ vec3 viewPosition=world-vec3(0.,0.,8.);
+ vViewPosition=-viewPosition;vNormal=uRoot*n;
+ gl_Position=projectionMatrix*vec4(viewPosition,1.);
+ int face=int(faceIndex+.5);
+ vec2 tile;
+ if(face==0)tile=vec2(1.-cell.z,1.+cell.y);
+ else if(face==1)tile=vec2(1.+cell.z,1.+cell.y);
+ else if(face==2)tile=vec2(1.+cell.x,1.-cell.z);
+ else if(face==3)tile=vec2(1.+cell.x,1.+cell.z);
+ else if(face==4)tile=vec2(1.+cell.x,1.+cell.y);
+ else tile=vec2(1.-cell.x,1.+cell.y);
+ vSymbol=(face==0||face==3||face==5)?1.:0.;
+ vec2 printed=uv;
+ if(cell.z>.5&&face==5){tile=vec2(cell.x+1.,cell.y+1.);if(x)printed=1.-uv;}
+ vArtworkUv=(tile+printed)/3.;
+}

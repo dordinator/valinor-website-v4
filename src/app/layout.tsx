@@ -6,6 +6,8 @@ import { AppProviders } from "@/components/app-providers";
 import { CookieBanner } from "@/components/cookie-banner";
 import { bodyFont, headingFont } from "@/components/home-hero/fonts";
 import { SITE_DESCRIPTION } from "@/lib/schema";
+import { InitialLoader } from "@/components/initial-loader/initial-loader";
+import { initialLoaderBootstrap } from "@/components/initial-loader/bootstrap";
 
 const SITE_TITLE = "Valinor Systems | SEO, AI Search and Web Design";
 
@@ -42,12 +44,20 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en-GB"
+      suppressHydrationWarning
       className={`${bodyFont.variable} ${headingFont.variable} h-full antialiased`}
     >
+      <head>
+        <script id="initial-loader-bootstrap" dangerouslySetInnerHTML={{ __html: initialLoaderBootstrap }} />
+        <script type="module" src="/loader-live/gate.js" async />
+      </head>
       <body className="min-h-full flex flex-col">
-        <AppProviders>{children}</AppProviders>
-        <Analytics />
-        <CookieBanner />
+        <InitialLoader />
+        <div id="site-content">
+          <AppProviders>{children}</AppProviders>
+          <Analytics />
+          <CookieBanner />
+        </div>
       </body>
     </html>
   );
