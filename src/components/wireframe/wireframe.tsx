@@ -8,7 +8,7 @@ import { BOOKING_URL } from "@/lib/booking";
 export const reviewPages = [
   ["Home", "/"], ["SEO", "/seo"], ["Web Design", "/web-design"],
   ["Google Ads", "/google-ads"], ["Ad Grants", "/google-ad-grants"],
-  ["Options & pricing", "/working-together"], ["Contact", "/contact"],
+  ["Packages", "/working-together"], ["Contact", "/contact"],
 ] as const;
 
 export function WireframeSurface({ children, transparent = false, className = "" }: { children: ReactNode; transparent?: boolean; className?: string }) {
@@ -33,5 +33,5 @@ export function Note({ children }: { children: ReactNode }) { return <div classN
 export function ActionLink({ href = BOOKING_URL, children }: { href?: string; children: ReactNode }) { return <Link className={styles.action} href={href}>{children}</Link>; }
 export function FAQ({ items }: { items: { question: string; answer: ReactNode }[] }) { return <div className={styles.faq}>{items.map(({ question, answer }) => <details key={question}><summary>{question}<span aria-hidden="true">+</span></summary><div>{answer}</div></details>)}</div>; }
 export function WireframeFooter() {
-  return <footer className={`${styles.footer} ${bodyFont.variable}`}><div><span>Valinor Systems · Wireframe preview</span><nav aria-label="Footer navigation"><Link href="/working-together">Options &amp; pricing</Link><Link href="/contact">Contact</Link><Link href="/login">Client portal</Link><Link href="/privacy">Privacy &amp; cookies</Link></nav></div></footer>;
+  return <footer className={`${styles.footer} ${bodyFont.variable}`}><div><span>Valinor Systems · Wireframe preview</span><nav aria-label="Footer navigation"><Link href="/working-together">Packages</Link><Link href="/contact">Contact</Link><Link href="/login">Client portal</Link><Link href="/privacy">Privacy &amp; cookies</Link></nav></div></footer>;
 }

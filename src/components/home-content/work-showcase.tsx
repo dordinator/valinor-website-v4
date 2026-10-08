@@ -10,25 +10,25 @@ const projects = [
     name: "UniFluent", headline: ["Selected work.", "The same attention to detail."],
     href: "https://unifluent.co.uk/",
     image: "/assets/studio-previews/unifluent-hero.png",
-    description: "A website for an Emesord language-learning product.", demo: false,
+    description: "A website for an Emesord language-learning product.",
   },
   {
     name: "NJH Sports Therapy and Pilates", headline: ["Clear journeys.", "From finding you to booking with you."],
     href: "https://www.njhsportstherapy.co.uk/",
     image: "/assets/studio-previews/njh-sports-therapy-hero.png",
-    description: "A website for an independent sports therapy and Pilates practice.", demo: false,
+    description: "A website for an independent sports therapy and Pilates practice.",
   },
   {
     name: "Canadian Citizenship Hub", headline: ["Specialist services.", "Made clear and easy to navigate."],
     href: "https://www.canadiancitizenshiphub.com/",
     image: "/assets/studio-previews/canadian-citizenship-hub-hero.png",
-    description: "A website for a specialist Canadian citizenship service.", demo: false,
+    description: "A website for a specialist Canadian citizenship service.",
   },
   {
     name: "RT Performance", headline: ["Different businesses.", "A website with its own character."],
     href: "https://rt-performance-2.vercel.app/",
     image: "/assets/studio-previews/rt-performance-hero.png",
-    description: "An automotive website demo showcasing the cars and the work.", demo: true,
+    description: "An automotive website showcasing the cars and the work.",
   },
 ] as const;
 
@@ -81,12 +81,11 @@ function Project({ project, rowRef }: { project: typeof projects[number]; rowRef
   return (
     <motion.li ref={ref} className={styles.project} style={{ opacity: reduced ? 1 : opacity }}>
       <div className={styles.projectContent}>
-        <a className={styles.image} href={project.href} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.name} ${project.demo ? "demo" : "website"}, opens in a new tab`}>
+        <a className={styles.image} href={project.href} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.name} website, opens in a new tab`}>
           <Image src={project.image} alt={`${project.name} website preview`} width={1280} height={720} sizes="(max-width: 800px) 90vw, (max-width: 1400px) 43vw, 550px" />
         </a>
         <div className={styles.description}>
           <h3>{project.name}</h3>
-          {project.demo && <span className={styles.demo}>Demo website</span>}
           <p>{project.description}</p>
         </div>
       </div>
@@ -154,7 +153,7 @@ export function WorkShowcase() {
             </div>
           </div>
         </div>
-        <ul ref={list} className={styles.projects} aria-label="Selected websites and demo projects">
+        <ul ref={list} className={styles.projects} aria-label="Selected websites">
           {projects.map((project, index) => <Project key={project.name} project={project} rowRef={rows[index]} />)}
         </ul>
       </div>

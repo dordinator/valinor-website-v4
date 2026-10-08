@@ -20,7 +20,6 @@
 .project:nth-child(4) .image { width: 94%; }
 .description h3 { font-size: 16px; font-weight: 600; color: #b7c1cb; line-height: 1.4; margin: 0 0 12px; }
 .work .description p { font-size: clamp(18px, 1.7vw, 24px); line-height: 1.4; font-weight: 400; letter-spacing: -.015em; color: #b7c1cb; margin: 0; }
-.demo { display: block; font-size: 12px; color: #cbb382; margin: -4px 0 12px; }
 
 @media (max-width: 1050px) {
   .container { width: calc(100% - 64px); gap: 24px; grid-template-columns: minmax(0, 28fr) minmax(0, 72fr); }
